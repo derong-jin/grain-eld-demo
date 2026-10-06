@@ -10,9 +10,17 @@ Requires Python 3 and a desktop browser with WebGL2 and Web Audio support. No Py
 python3 cors_server.py 8000
 ```
 
-Open **http://localhost:8000/**. The port is optional (default: 8000). The server binds to localhost and serves this repository even when launched from another working directory, with the required COOP/COEP headers. Use the server rather than opening the HTML file directly.
+Open **http://localhost:8000/**. The port is optional (default: 8000). The server binds to localhost and serves this repository even when launched from another working directory, with COOP/COEP headers for local development. The renderer disables shared-memory workers, so static hosting without these headers is also supported. Use the server rather than opening the HTML file directly.
 
 Internet access is required for the pinned CDN imports: **Three.js 0.165.0** (unpkg) and **GaussianSplats3D 0.4.7** (jsDelivr). Inter loads from Google Fonts, with a system-font fallback. Scene and audio assets are served locally.
+
+## GitHub Pages
+
+Deployment target: **https://derong-jin.github.io/grain-eld-demo/**.
+
+GitHub Pages publishes the root of the `main` branch. The `.nojekyll` file preserves the static site without a Jekyll build. HTML, JavaScript, the preprocessing worker and scene assets use relative URLs so they work under the repository's `/grain-eld-demo/` path. The Python server is only for local development and is not needed online.
+
+After committing updates, `git push origin main` triggers a new deployment. Check the repository's **Actions** tab for the Pages build/deployment status. CDN dependencies and the browser's click-to-play audio policy also apply to the online version.
 
 ## Included scenes
 
@@ -57,7 +65,7 @@ Dictionary source filenames and offline outputs are provenance only; the viewer 
 
 ## Assets and Git
 
-The two scenes contain **236 runtime files, about 97.75 MiB**, with a largest file of **31.05 MiB**. Gaussian PLY files are already compressed; PCM grains are retained without recompression. All resources fit ordinary Git, with no Git LFS or additional compression. Upload with `git push`; no remote is configured.
+The two scenes contain **236 runtime files, about 97.75 MiB**, with a largest file of **31.05 MiB**. Gaussian PLY files are already compressed; PCM grains are retained without recompression. All resources fit ordinary Git, with no Git LFS or additional compression. Upload with `git push`; the remote repository is `derong-jin/grain-eld-demo`.
 
 Spring's retired loops and grain libraries are no longer bundled in the working tree. The complete earlier audio version remains in Git history at `f3ad26b`; this change does not rewrite that history. A research copy is also preserved outside the viewer in `spring-grain-sources/retired-viewer-spring/` in the parent project. The standalone viewer does not depend on that copy.
 
