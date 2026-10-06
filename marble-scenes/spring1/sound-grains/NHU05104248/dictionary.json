@@ -1,0 +1,2785 @@
+{
+  "format": "sound-grain-dictionary",
+  "version": 1,
+  "noise_profile": {
+    "path": "noise-profile.json",
+    "format": "sound-grain-noise-profile",
+    "version": 1
+  },
+  "created_utc": "2026-07-27T00:59:53.561950+00:00",
+  "config": {
+    "hop_ms": 10.0,
+    "smooth_ms": 50.0,
+    "noise_percentile": 5.0,
+    "threshold_offset_db": 1.0,
+    "threshold_db": null,
+    "hysteresis_db": 4.0,
+    "min_silence_ms": 80.0,
+    "min_duration_ms": 100.0,
+    "max_duration_ms": 1000.0,
+    "padding_ms": 10.0,
+    "fade_ms": 5.0
+  },
+  "sources": [
+    {
+      "file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_sec": 153.645624,
+      "grain_count": 183,
+      "noise_floor_dbfs": -28.6668,
+      "on_threshold_dbfs": -27.6668,
+      "off_threshold_dbfs": -31.6668,
+      "analysis_hop_ms": 10.0
+    }
+  ],
+  "grains": {
+    "grain_000000": {
+      "id": "grain_000000",
+      "path": "grains/grain_000000.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 2.66,
+      "end_sec": 3.34,
+      "duration_sec": 0.68,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -27.9122,
+        "peak_dbfs": -13.9921,
+        "zero_crossing_rate": 0.0771334
+      }
+    },
+    "grain_000001": {
+      "id": "grain_000001",
+      "path": "grains/grain_000001.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 3.32,
+      "end_sec": 3.95,
+      "duration_sec": 0.63,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -26.9203,
+        "peak_dbfs": -13.1756,
+        "zero_crossing_rate": 0.0768123
+      }
+    },
+    "grain_000002": {
+      "id": "grain_000002",
+      "path": "grains/grain_000002.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 3.93,
+      "end_sec": 4.76,
+      "duration_sec": 0.83,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -26.1524,
+        "peak_dbfs": -11.5446,
+        "zero_crossing_rate": 0.0687941
+      }
+    },
+    "grain_000003": {
+      "id": "grain_000003",
+      "path": "grains/grain_000003.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 4.74,
+      "end_sec": 5.54,
+      "duration_sec": 0.8,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -26.8128,
+        "peak_dbfs": -9.5573,
+        "zero_crossing_rate": 0.0753139
+      }
+    },
+    "grain_000004": {
+      "id": "grain_000004",
+      "path": "grains/grain_000004.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 5.52,
+      "end_sec": 6.43,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8831,
+        "peak_dbfs": -8.7813,
+        "zero_crossing_rate": 0.0729629
+      }
+    },
+    "grain_000005": {
+      "id": "grain_000005",
+      "path": "grains/grain_000005.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 6.41,
+      "end_sec": 7.23,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.1996,
+        "peak_dbfs": -9.9458,
+        "zero_crossing_rate": 0.0766572
+      }
+    },
+    "grain_000006": {
+      "id": "grain_000006",
+      "path": "grains/grain_000006.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 7.21,
+      "end_sec": 7.83,
+      "duration_sec": 0.62,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.2359,
+        "peak_dbfs": -10.0607,
+        "zero_crossing_rate": 0.0844153
+      }
+    },
+    "grain_000007": {
+      "id": "grain_000007",
+      "path": "grains/grain_000007.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 7.81,
+      "end_sec": 8.45,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8384,
+        "peak_dbfs": -10.7893,
+        "zero_crossing_rate": 0.0739113
+      }
+    },
+    "grain_000008": {
+      "id": "grain_000008",
+      "path": "grains/grain_000008.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 8.43,
+      "end_sec": 9.14,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.154,
+        "peak_dbfs": -11.778,
+        "zero_crossing_rate": 0.0716704
+      }
+    },
+    "grain_000009": {
+      "id": "grain_000009",
+      "path": "grains/grain_000009.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 9.12,
+      "end_sec": 9.87,
+      "duration_sec": 0.75,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1393,
+        "peak_dbfs": -10.9805,
+        "zero_crossing_rate": 0.0743787
+      }
+    },
+    "grain_000010": {
+      "id": "grain_000010",
+      "path": "grains/grain_000010.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 9.85,
+      "end_sec": 10.52,
+      "duration_sec": 0.67,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3347,
+        "peak_dbfs": -11.0749,
+        "zero_crossing_rate": 0.0746294
+      }
+    },
+    "grain_000011": {
+      "id": "grain_000011",
+      "path": "grains/grain_000011.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 10.5,
+      "end_sec": 11.43,
+      "duration_sec": 0.93,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.5182,
+        "peak_dbfs": -10.84,
+        "zero_crossing_rate": 0.0667853
+      }
+    },
+    "grain_000012": {
+      "id": "grain_000012",
+      "path": "grains/grain_000012.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 11.41,
+      "end_sec": 12.35,
+      "duration_sec": 0.94,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7289,
+        "peak_dbfs": -11.9065,
+        "zero_crossing_rate": 0.0710202
+      }
+    },
+    "grain_000013": {
+      "id": "grain_000013",
+      "path": "grains/grain_000013.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 12.33,
+      "end_sec": 12.98,
+      "duration_sec": 0.65,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8572,
+        "peak_dbfs": -11.7452,
+        "zero_crossing_rate": 0.0515978
+      }
+    },
+    "grain_000014": {
+      "id": "grain_000014",
+      "path": "grains/grain_000014.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 12.96,
+      "end_sec": 13.6,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9626,
+        "peak_dbfs": -8.984,
+        "zero_crossing_rate": 0.0616518
+      }
+    },
+    "grain_000015": {
+      "id": "grain_000015",
+      "path": "grains/grain_000015.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 13.58,
+      "end_sec": 14.56,
+      "duration_sec": 0.98,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6005,
+        "peak_dbfs": -10.196,
+        "zero_crossing_rate": 0.0674734
+      }
+    },
+    "grain_000016": {
+      "id": "grain_000016",
+      "path": "grains/grain_000016.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 14.54,
+      "end_sec": 15.37,
+      "duration_sec": 0.83,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.2221,
+        "peak_dbfs": -11.3232,
+        "zero_crossing_rate": 0.0678651
+      }
+    },
+    "grain_000017": {
+      "id": "grain_000017",
+      "path": "grains/grain_000017.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 15.35,
+      "end_sec": 16.16,
+      "duration_sec": 0.81,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8362,
+        "peak_dbfs": -8.2138,
+        "zero_crossing_rate": 0.062458
+      }
+    },
+    "grain_000018": {
+      "id": "grain_000018",
+      "path": "grains/grain_000018.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 16.14,
+      "end_sec": 16.96,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.481,
+        "peak_dbfs": -12.1179,
+        "zero_crossing_rate": 0.0650424
+      }
+    },
+    "grain_000019": {
+      "id": "grain_000019",
+      "path": "grains/grain_000019.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 16.94,
+      "end_sec": 17.82,
+      "duration_sec": 0.88,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8397,
+        "peak_dbfs": -10.7967,
+        "zero_crossing_rate": 0.0683382
+      }
+    },
+    "grain_000020": {
+      "id": "grain_000020",
+      "path": "grains/grain_000020.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 17.8,
+      "end_sec": 18.81,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.3731,
+        "peak_dbfs": -9.6108,
+        "zero_crossing_rate": 0.0630669
+      }
+    },
+    "grain_000021": {
+      "id": "grain_000021",
+      "path": "grains/grain_000021.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 18.79,
+      "end_sec": 19.7,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.1823,
+        "peak_dbfs": -4.5848,
+        "zero_crossing_rate": 0.0673063
+      }
+    },
+    "grain_000022": {
+      "id": "grain_000022",
+      "path": "grains/grain_000022.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 19.68,
+      "end_sec": 20.43,
+      "duration_sec": 0.75,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.2327,
+        "peak_dbfs": -9.0228,
+        "zero_crossing_rate": 0.0667594
+      }
+    },
+    "grain_000023": {
+      "id": "grain_000023",
+      "path": "grains/grain_000023.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 20.41,
+      "end_sec": 21.32,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3391,
+        "peak_dbfs": -6.8284,
+        "zero_crossing_rate": 0.0686519
+      }
+    },
+    "grain_000024": {
+      "id": "grain_000024",
+      "path": "grains/grain_000024.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 21.3,
+      "end_sec": 22.32,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.769,
+        "peak_dbfs": -8.6907,
+        "zero_crossing_rate": 0.0661835
+      }
+    },
+    "grain_000025": {
+      "id": "grain_000025",
+      "path": "grains/grain_000025.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 22.3,
+      "end_sec": 23.08,
+      "duration_sec": 0.78,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.196,
+        "peak_dbfs": -8.0582,
+        "zero_crossing_rate": 0.0740762
+      }
+    },
+    "grain_000026": {
+      "id": "grain_000026",
+      "path": "grains/grain_000026.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 23.06,
+      "end_sec": 23.84,
+      "duration_sec": 0.78,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.339,
+        "peak_dbfs": -11.0939,
+        "zero_crossing_rate": 0.0655871
+      }
+    },
+    "grain_000027": {
+      "id": "grain_000027",
+      "path": "grains/grain_000027.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 23.82,
+      "end_sec": 24.55,
+      "duration_sec": 0.73,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.5929,
+        "peak_dbfs": -8.7428,
+        "zero_crossing_rate": 0.0598596
+      }
+    },
+    "grain_000028": {
+      "id": "grain_000028",
+      "path": "grains/grain_000028.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 24.53,
+      "end_sec": 25.46,
+      "duration_sec": 0.93,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.917,
+        "peak_dbfs": -10.2709,
+        "zero_crossing_rate": 0.0652492
+      }
+    },
+    "grain_000029": {
+      "id": "grain_000029",
+      "path": "grains/grain_000029.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 25.44,
+      "end_sec": 26.15,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.164,
+        "peak_dbfs": -11.4639,
+        "zero_crossing_rate": 0.0633983
+      }
+    },
+    "grain_000030": {
+      "id": "grain_000030",
+      "path": "grains/grain_000030.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 26.13,
+      "end_sec": 27.09,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.8841,
+        "peak_dbfs": -8.4743,
+        "zero_crossing_rate": 0.070698
+      }
+    },
+    "grain_000031": {
+      "id": "grain_000031",
+      "path": "grains/grain_000031.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 27.07,
+      "end_sec": 28.0,
+      "duration_sec": 0.93,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.1339,
+        "peak_dbfs": -11.1349,
+        "zero_crossing_rate": 0.0665659
+      }
+    },
+    "grain_000032": {
+      "id": "grain_000032",
+      "path": "grains/grain_000032.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 27.98,
+      "end_sec": 28.61,
+      "duration_sec": 0.63,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0807,
+        "peak_dbfs": -11.5156,
+        "zero_crossing_rate": 0.0739688
+      }
+    },
+    "grain_000033": {
+      "id": "grain_000033",
+      "path": "grains/grain_000033.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 28.59,
+      "end_sec": 29.3,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.833,
+        "peak_dbfs": -9.3791,
+        "zero_crossing_rate": 0.0741616
+      }
+    },
+    "grain_000034": {
+      "id": "grain_000034",
+      "path": "grains/grain_000034.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 29.28,
+      "end_sec": 30.06,
+      "duration_sec": 0.78,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6837,
+        "peak_dbfs": -8.2336,
+        "zero_crossing_rate": 0.0766927
+      }
+    },
+    "grain_000035": {
+      "id": "grain_000035",
+      "path": "grains/grain_000035.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 30.04,
+      "end_sec": 30.94,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9015,
+        "peak_dbfs": -7.5505,
+        "zero_crossing_rate": 0.0816851
+      }
+    },
+    "grain_000036": {
+      "id": "grain_000036",
+      "path": "grains/grain_000036.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 30.92,
+      "end_sec": 31.62,
+      "duration_sec": 0.7,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9218,
+        "peak_dbfs": -9.9675,
+        "zero_crossing_rate": 0.0771324
+      }
+    },
+    "grain_000037": {
+      "id": "grain_000037",
+      "path": "grains/grain_000037.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 31.6,
+      "end_sec": 32.38,
+      "duration_sec": 0.78,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.4721,
+        "peak_dbfs": -10.804,
+        "zero_crossing_rate": 0.0716923
+      }
+    },
+    "grain_000038": {
+      "id": "grain_000038",
+      "path": "grains/grain_000038.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 32.36,
+      "end_sec": 33.05,
+      "duration_sec": 0.69,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.2294,
+        "peak_dbfs": -9.5629,
+        "zero_crossing_rate": 0.0740436
+      }
+    },
+    "grain_000039": {
+      "id": "grain_000039",
+      "path": "grains/grain_000039.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 33.03,
+      "end_sec": 33.65,
+      "duration_sec": 0.62,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2809,
+        "peak_dbfs": -10.3316,
+        "zero_crossing_rate": 0.0680297
+      }
+    },
+    "grain_000040": {
+      "id": "grain_000040",
+      "path": "grains/grain_000040.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 33.63,
+      "end_sec": 34.34,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6475,
+        "peak_dbfs": -6.8651,
+        "zero_crossing_rate": 0.0741297
+      }
+    },
+    "grain_000041": {
+      "id": "grain_000041",
+      "path": "grains/grain_000041.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 34.32,
+      "end_sec": 34.96,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.2675,
+        "peak_dbfs": -12.3323,
+        "zero_crossing_rate": 0.0772774
+      }
+    },
+    "grain_000042": {
+      "id": "grain_000042",
+      "path": "grains/grain_000042.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 34.94,
+      "end_sec": 35.9,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.484,
+        "peak_dbfs": -6.7959,
+        "zero_crossing_rate": 0.0757057
+      }
+    },
+    "grain_000043": {
+      "id": "grain_000043",
+      "path": "grains/grain_000043.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 35.88,
+      "end_sec": 36.88,
+      "duration_sec": 1.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.5347,
+        "peak_dbfs": -11.1024,
+        "zero_crossing_rate": 0.0756933
+      }
+    },
+    "grain_000044": {
+      "id": "grain_000044",
+      "path": "grains/grain_000044.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 36.86,
+      "end_sec": 37.67,
+      "duration_sec": 0.81,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.0388,
+        "peak_dbfs": -10.8464,
+        "zero_crossing_rate": 0.0700448
+      }
+    },
+    "grain_000045": {
+      "id": "grain_000045",
+      "path": "grains/grain_000045.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 37.65,
+      "end_sec": 38.47,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7389,
+        "peak_dbfs": -9.4496,
+        "zero_crossing_rate": 0.072675
+      }
+    },
+    "grain_000046": {
+      "id": "grain_000046",
+      "path": "grains/grain_000046.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 38.45,
+      "end_sec": 39.32,
+      "duration_sec": 0.87,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6408,
+        "peak_dbfs": -9.0183,
+        "zero_crossing_rate": 0.0757441
+      }
+    },
+    "grain_000047": {
+      "id": "grain_000047",
+      "path": "grains/grain_000047.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 39.3,
+      "end_sec": 39.93,
+      "duration_sec": 0.63,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1108,
+        "peak_dbfs": -9.3277,
+        "zero_crossing_rate": 0.0719531
+      }
+    },
+    "grain_000048": {
+      "id": "grain_000048",
+      "path": "grains/grain_000048.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 39.91,
+      "end_sec": 40.85,
+      "duration_sec": 0.94,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1166,
+        "peak_dbfs": -4.5284,
+        "zero_crossing_rate": 0.0657612
+      }
+    },
+    "grain_000049": {
+      "id": "grain_000049",
+      "path": "grains/grain_000049.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 40.83,
+      "end_sec": 41.74,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9242,
+        "peak_dbfs": -12.3851,
+        "zero_crossing_rate": 0.0714677
+      }
+    },
+    "grain_000050": {
+      "id": "grain_000050",
+      "path": "grains/grain_000050.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 41.72,
+      "end_sec": 42.65,
+      "duration_sec": 0.93,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1919,
+        "peak_dbfs": -11.3711,
+        "zero_crossing_rate": 0.0637862
+      }
+    },
+    "grain_000051": {
+      "id": "grain_000051",
+      "path": "grains/grain_000051.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 42.63,
+      "end_sec": 43.64,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2981,
+        "peak_dbfs": -11.112,
+        "zero_crossing_rate": 0.0641895
+      }
+    },
+    "grain_000052": {
+      "id": "grain_000052",
+      "path": "grains/grain_000052.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 43.62,
+      "end_sec": 44.5,
+      "duration_sec": 0.88,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7846,
+        "peak_dbfs": -10.4306,
+        "zero_crossing_rate": 0.0683124
+      }
+    },
+    "grain_000053": {
+      "id": "grain_000053",
+      "path": "grains/grain_000053.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 44.48,
+      "end_sec": 45.5,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.927,
+        "peak_dbfs": -12.4905,
+        "zero_crossing_rate": 0.0644939
+      }
+    },
+    "grain_000054": {
+      "id": "grain_000054",
+      "path": "grains/grain_000054.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 45.48,
+      "end_sec": 46.32,
+      "duration_sec": 0.84,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0146,
+        "peak_dbfs": -8.1404,
+        "zero_crossing_rate": 0.062414
+      }
+    },
+    "grain_000055": {
+      "id": "grain_000055",
+      "path": "grains/grain_000055.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 46.3,
+      "end_sec": 46.96,
+      "duration_sec": 0.66,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.2984,
+        "peak_dbfs": -11.7176,
+        "zero_crossing_rate": 0.0702628
+      }
+    },
+    "grain_000056": {
+      "id": "grain_000056",
+      "path": "grains/grain_000056.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 46.94,
+      "end_sec": 47.76,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7905,
+        "peak_dbfs": -11.1885,
+        "zero_crossing_rate": 0.0675866
+      }
+    },
+    "grain_000057": {
+      "id": "grain_000057",
+      "path": "grains/grain_000057.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 47.74,
+      "end_sec": 48.7,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3614,
+        "peak_dbfs": -8.6605,
+        "zero_crossing_rate": 0.0678635
+      }
+    },
+    "grain_000058": {
+      "id": "grain_000058",
+      "path": "grains/grain_000058.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 48.68,
+      "end_sec": 49.38,
+      "duration_sec": 0.7,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9074,
+        "peak_dbfs": -10.4978,
+        "zero_crossing_rate": 0.0696816
+      }
+    },
+    "grain_000059": {
+      "id": "grain_000059",
+      "path": "grains/grain_000059.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 49.36,
+      "end_sec": 50.31,
+      "duration_sec": 0.95,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6332,
+        "peak_dbfs": -7.2736,
+        "zero_crossing_rate": 0.0678617
+      }
+    },
+    "grain_000060": {
+      "id": "grain_000060",
+      "path": "grains/grain_000060.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 50.29,
+      "end_sec": 50.96,
+      "duration_sec": 0.67,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8392,
+        "peak_dbfs": -11.132,
+        "zero_crossing_rate": 0.0672849
+      }
+    },
+    "grain_000061": {
+      "id": "grain_000061",
+      "path": "grains/grain_000061.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 50.94,
+      "end_sec": 51.6,
+      "duration_sec": 0.66,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.0712,
+        "peak_dbfs": -11.7708,
+        "zero_crossing_rate": 0.0648342
+      }
+    },
+    "grain_000062": {
+      "id": "grain_000062",
+      "path": "grains/grain_000062.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 51.58,
+      "end_sec": 52.55,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9081,
+        "peak_dbfs": -9.8736,
+        "zero_crossing_rate": 0.0646858
+      }
+    },
+    "grain_000063": {
+      "id": "grain_000063",
+      "path": "grains/grain_000063.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 52.53,
+      "end_sec": 53.35,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2825,
+        "peak_dbfs": -7.4181,
+        "zero_crossing_rate": 0.0690246
+      }
+    },
+    "grain_000064": {
+      "id": "grain_000064",
+      "path": "grains/grain_000064.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 53.33,
+      "end_sec": 54.0,
+      "duration_sec": 0.67,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6922,
+        "peak_dbfs": -9.4127,
+        "zero_crossing_rate": 0.0701956
+      }
+    },
+    "grain_000065": {
+      "id": "grain_000065",
+      "path": "grains/grain_000065.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 53.98,
+      "end_sec": 54.63,
+      "duration_sec": 0.65,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.3072,
+        "peak_dbfs": -9.7849,
+        "zero_crossing_rate": 0.0729835
+      }
+    },
+    "grain_000066": {
+      "id": "grain_000066",
+      "path": "grains/grain_000066.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 54.61,
+      "end_sec": 55.63,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.526,
+        "peak_dbfs": -9.8127,
+        "zero_crossing_rate": 0.0776995
+      }
+    },
+    "grain_000067": {
+      "id": "grain_000067",
+      "path": "grains/grain_000067.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 55.61,
+      "end_sec": 56.4,
+      "duration_sec": 0.79,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9241,
+        "peak_dbfs": -11.0787,
+        "zero_crossing_rate": 0.074545
+      }
+    },
+    "grain_000068": {
+      "id": "grain_000068",
+      "path": "grains/grain_000068.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 56.38,
+      "end_sec": 57.13,
+      "duration_sec": 0.75,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.7074,
+        "peak_dbfs": -10.0734,
+        "zero_crossing_rate": 0.0772812
+      }
+    },
+    "grain_000069": {
+      "id": "grain_000069",
+      "path": "grains/grain_000069.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 57.11,
+      "end_sec": 57.78,
+      "duration_sec": 0.67,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.8018,
+        "peak_dbfs": -10.5334,
+        "zero_crossing_rate": 0.0795708
+      }
+    },
+    "grain_000070": {
+      "id": "grain_000070",
+      "path": "grains/grain_000070.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 57.76,
+      "end_sec": 58.67,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.8658,
+        "peak_dbfs": -10.3718,
+        "zero_crossing_rate": 0.0717668
+      }
+    },
+    "grain_000071": {
+      "id": "grain_000071",
+      "path": "grains/grain_000071.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 58.65,
+      "end_sec": 59.6,
+      "duration_sec": 0.95,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3376,
+        "peak_dbfs": -10.1064,
+        "zero_crossing_rate": 0.0724686
+      }
+    },
+    "grain_000072": {
+      "id": "grain_000072",
+      "path": "grains/grain_000072.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 59.58,
+      "end_sec": 60.23,
+      "duration_sec": 0.65,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.282,
+        "peak_dbfs": -11.0304,
+        "zero_crossing_rate": 0.0532375
+      }
+    },
+    "grain_000073": {
+      "id": "grain_000073",
+      "path": "grains/grain_000073.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 60.21,
+      "end_sec": 60.85,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2037,
+        "peak_dbfs": -7.3462,
+        "zero_crossing_rate": 0.0743011
+      }
+    },
+    "grain_000074": {
+      "id": "grain_000074",
+      "path": "grains/grain_000074.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 60.83,
+      "end_sec": 61.81,
+      "duration_sec": 0.98,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1549,
+        "peak_dbfs": -9.9675,
+        "zero_crossing_rate": 0.0710831
+      }
+    },
+    "grain_000075": {
+      "id": "grain_000075",
+      "path": "grains/grain_000075.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 61.79,
+      "end_sec": 62.61,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.817,
+        "peak_dbfs": -10.5861,
+        "zero_crossing_rate": 0.066757
+      }
+    },
+    "grain_000076": {
+      "id": "grain_000076",
+      "path": "grains/grain_000076.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 62.59,
+      "end_sec": 63.4,
+      "duration_sec": 0.81,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2241,
+        "peak_dbfs": -7.3166,
+        "zero_crossing_rate": 0.0613102
+      }
+    },
+    "grain_000077": {
+      "id": "grain_000077",
+      "path": "grains/grain_000077.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 63.38,
+      "end_sec": 64.2,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7393,
+        "peak_dbfs": -11.1435,
+        "zero_crossing_rate": 0.061005
+      }
+    },
+    "grain_000078": {
+      "id": "grain_000078",
+      "path": "grains/grain_000078.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 64.18,
+      "end_sec": 65.06,
+      "duration_sec": 0.88,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3852,
+        "peak_dbfs": -10.5978,
+        "zero_crossing_rate": 0.0608395
+      }
+    },
+    "grain_000079": {
+      "id": "grain_000079",
+      "path": "grains/grain_000079.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 65.04,
+      "end_sec": 66.05,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.0244,
+        "peak_dbfs": -9.1877,
+        "zero_crossing_rate": 0.0544454
+      }
+    },
+    "grain_000080": {
+      "id": "grain_000080",
+      "path": "grains/grain_000080.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 66.03,
+      "end_sec": 66.94,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.0908,
+        "peak_dbfs": -4.2071,
+        "zero_crossing_rate": 0.0590331
+      }
+    },
+    "grain_000081": {
+      "id": "grain_000081",
+      "path": "grains/grain_000081.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 66.92,
+      "end_sec": 67.64,
+      "duration_sec": 0.72,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.0887,
+        "peak_dbfs": -9.0498,
+        "zero_crossing_rate": 0.0585808
+      }
+    },
+    "grain_000082": {
+      "id": "grain_000082",
+      "path": "grains/grain_000082.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 67.62,
+      "end_sec": 68.56,
+      "duration_sec": 0.94,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3766,
+        "peak_dbfs": -9.0288,
+        "zero_crossing_rate": 0.0592478
+      }
+    },
+    "grain_000083": {
+      "id": "grain_000083",
+      "path": "grains/grain_000083.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 68.54,
+      "end_sec": 69.56,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.7629,
+        "peak_dbfs": -9.1268,
+        "zero_crossing_rate": 0.0591361
+      }
+    },
+    "grain_000084": {
+      "id": "grain_000084",
+      "path": "grains/grain_000084.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 69.54,
+      "end_sec": 70.3,
+      "duration_sec": 0.76,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.291,
+        "peak_dbfs": -8.1682,
+        "zero_crossing_rate": 0.0667164
+      }
+    },
+    "grain_000085": {
+      "id": "grain_000085",
+      "path": "grains/grain_000085.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 70.28,
+      "end_sec": 71.07,
+      "duration_sec": 0.79,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3087,
+        "peak_dbfs": -11.5717,
+        "zero_crossing_rate": 0.0620874
+      }
+    },
+    "grain_000086": {
+      "id": "grain_000086",
+      "path": "grains/grain_000086.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 71.05,
+      "end_sec": 71.78,
+      "duration_sec": 0.73,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.4365,
+        "peak_dbfs": -8.3889,
+        "zero_crossing_rate": 0.0577783
+      }
+    },
+    "grain_000087": {
+      "id": "grain_000087",
+      "path": "grains/grain_000087.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 71.76,
+      "end_sec": 72.77,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.6757,
+        "peak_dbfs": -9.8778,
+        "zero_crossing_rate": 0.0648855
+      }
+    },
+    "grain_000088": {
+      "id": "grain_000088",
+      "path": "grains/grain_000088.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 72.75,
+      "end_sec": 73.72,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.5608,
+        "peak_dbfs": -7.6875,
+        "zero_crossing_rate": 0.0662989
+      }
+    },
+    "grain_000089": {
+      "id": "grain_000089",
+      "path": "grains/grain_000089.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 73.7,
+      "end_sec": 74.4,
+      "duration_sec": 0.7,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3411,
+        "peak_dbfs": -10.1064,
+        "zero_crossing_rate": 0.0710421
+      }
+    },
+    "grain_000090": {
+      "id": "grain_000090",
+      "path": "grains/grain_000090.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 74.38,
+      "end_sec": 75.22,
+      "duration_sec": 0.84,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.1069,
+        "peak_dbfs": -11.0882,
+        "zero_crossing_rate": 0.062036
+      }
+    },
+    "grain_000091": {
+      "id": "grain_000091",
+      "path": "grains/grain_000091.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 75.2,
+      "end_sec": 75.83,
+      "duration_sec": 0.63,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0092,
+        "peak_dbfs": -12.384,
+        "zero_crossing_rate": 0.0653661
+      }
+    },
+    "grain_000092": {
+      "id": "grain_000092",
+      "path": "grains/grain_000092.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 75.81,
+      "end_sec": 76.52,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0646,
+        "peak_dbfs": -10.4774,
+        "zero_crossing_rate": 0.0644842
+      }
+    },
+    "grain_000093": {
+      "id": "grain_000093",
+      "path": "grains/grain_000093.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 76.5,
+      "end_sec": 77.49,
+      "duration_sec": 0.99,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0186,
+        "peak_dbfs": -10.1106,
+        "zero_crossing_rate": 0.0678455
+      }
+    },
+    "grain_000094": {
+      "id": "grain_000094",
+      "path": "grains/grain_000094.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 77.47,
+      "end_sec": 78.43,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9724,
+        "peak_dbfs": -8.6468,
+        "zero_crossing_rate": 0.069328
+      }
+    },
+    "grain_000095": {
+      "id": "grain_000095",
+      "path": "grains/grain_000095.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 78.41,
+      "end_sec": 79.32,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.3744,
+        "peak_dbfs": -10.0911,
+        "zero_crossing_rate": 0.0669325
+      }
+    },
+    "grain_000096": {
+      "id": "grain_000096",
+      "path": "grains/grain_000096.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 79.3,
+      "end_sec": 80.26,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.1894,
+        "peak_dbfs": -10.0295,
+        "zero_crossing_rate": 0.0654777
+      }
+    },
+    "grain_000097": {
+      "id": "grain_000097",
+      "path": "grains/grain_000097.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 80.24,
+      "end_sec": 81.16,
+      "duration_sec": 0.92,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3443,
+        "peak_dbfs": -10.7664,
+        "zero_crossing_rate": 0.0635922
+      }
+    },
+    "grain_000098": {
+      "id": "grain_000098",
+      "path": "grains/grain_000098.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 81.14,
+      "end_sec": 81.91,
+      "duration_sec": 0.77,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7256,
+        "peak_dbfs": -6.3139,
+        "zero_crossing_rate": 0.0764519
+      }
+    },
+    "grain_000099": {
+      "id": "grain_000099",
+      "path": "grains/grain_000099.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 81.89,
+      "end_sec": 82.65,
+      "duration_sec": 0.76,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.5398,
+        "peak_dbfs": -9.6373,
+        "zero_crossing_rate": 0.0797553
+      }
+    },
+    "grain_000100": {
+      "id": "grain_000100",
+      "path": "grains/grain_000100.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 82.63,
+      "end_sec": 83.33,
+      "duration_sec": 0.7,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9925,
+        "peak_dbfs": -6.4148,
+        "zero_crossing_rate": 0.0811494
+      }
+    },
+    "grain_000101": {
+      "id": "grain_000101",
+      "path": "grains/grain_000101.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 83.31,
+      "end_sec": 84.08,
+      "duration_sec": 0.77,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2506,
+        "peak_dbfs": -10.4756,
+        "zero_crossing_rate": 0.0798681
+      }
+    },
+    "grain_000102": {
+      "id": "grain_000102",
+      "path": "grains/grain_000102.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 84.06,
+      "end_sec": 85.05,
+      "duration_sec": 0.99,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.8039,
+        "peak_dbfs": -10.5262,
+        "zero_crossing_rate": 0.0705484
+      }
+    },
+    "grain_000103": {
+      "id": "grain_000103",
+      "path": "grains/grain_000103.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 85.03,
+      "end_sec": 85.68,
+      "duration_sec": 0.65,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7982,
+        "peak_dbfs": -9.9834,
+        "zero_crossing_rate": 0.0724253
+      }
+    },
+    "grain_000104": {
+      "id": "grain_000104",
+      "path": "grains/grain_000104.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 85.66,
+      "end_sec": 86.52,
+      "duration_sec": 0.86,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3197,
+        "peak_dbfs": -8.8068,
+        "zero_crossing_rate": 0.0774951
+      }
+    },
+    "grain_000105": {
+      "id": "grain_000105",
+      "path": "grains/grain_000105.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 86.5,
+      "end_sec": 87.5,
+      "duration_sec": 1.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.6315,
+        "peak_dbfs": -4.553,
+        "zero_crossing_rate": 0.074038
+      }
+    },
+    "grain_000106": {
+      "id": "grain_000106",
+      "path": "grains/grain_000106.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 87.48,
+      "end_sec": 88.31,
+      "duration_sec": 0.83,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6683,
+        "peak_dbfs": -8.6533,
+        "zero_crossing_rate": 0.072619
+      }
+    },
+    "grain_000107": {
+      "id": "grain_000107",
+      "path": "grains/grain_000107.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 88.29,
+      "end_sec": 89.19,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0834,
+        "peak_dbfs": -12.5443,
+        "zero_crossing_rate": 0.0716067
+      }
+    },
+    "grain_000108": {
+      "id": "grain_000108",
+      "path": "grains/grain_000108.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 89.17,
+      "end_sec": 89.85,
+      "duration_sec": 0.68,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3398,
+        "peak_dbfs": -11.5396,
+        "zero_crossing_rate": 0.0643946
+      }
+    },
+    "grain_000109": {
+      "id": "grain_000109",
+      "path": "grains/grain_000109.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 89.83,
+      "end_sec": 90.81,
+      "duration_sec": 0.98,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4449,
+        "peak_dbfs": -11.3163,
+        "zero_crossing_rate": 0.0656917
+      }
+    },
+    "grain_000110": {
+      "id": "grain_000110",
+      "path": "grains/grain_000110.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 90.79,
+      "end_sec": 91.58,
+      "duration_sec": 0.79,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8715,
+        "peak_dbfs": -10.1771,
+        "zero_crossing_rate": 0.0699236
+      }
+    },
+    "grain_000111": {
+      "id": "grain_000111",
+      "path": "grains/grain_000111.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 91.56,
+      "end_sec": 92.4,
+      "duration_sec": 0.84,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8153,
+        "peak_dbfs": -12.5927,
+        "zero_crossing_rate": 0.0695138
+      }
+    },
+    "grain_000112": {
+      "id": "grain_000112",
+      "path": "grains/grain_000112.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 92.38,
+      "end_sec": 93.01,
+      "duration_sec": 0.63,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8623,
+        "peak_dbfs": -12.476,
+        "zero_crossing_rate": 0.0624145
+      }
+    },
+    "grain_000113": {
+      "id": "grain_000113",
+      "path": "grains/grain_000113.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 92.99,
+      "end_sec": 93.96,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.2325,
+        "peak_dbfs": -8.224,
+        "zero_crossing_rate": 0.0692211
+      }
+    },
+    "grain_000114": {
+      "id": "grain_000114",
+      "path": "grains/grain_000114.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 93.94,
+      "end_sec": 94.95,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9655,
+        "peak_dbfs": -11.4055,
+        "zero_crossing_rate": 0.0689493
+      }
+    },
+    "grain_000115": {
+      "id": "grain_000115",
+      "path": "grains/grain_000115.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 94.93,
+      "end_sec": 95.88,
+      "duration_sec": 0.95,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4035,
+        "peak_dbfs": -8.6626,
+        "zero_crossing_rate": 0.0700816
+      }
+    },
+    "grain_000116": {
+      "id": "grain_000116",
+      "path": "grains/grain_000116.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 95.86,
+      "end_sec": 96.57,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0332,
+        "peak_dbfs": -10.3805,
+        "zero_crossing_rate": 0.0725647
+      }
+    },
+    "grain_000117": {
+      "id": "grain_000117",
+      "path": "grains/grain_000117.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 96.55,
+      "end_sec": 97.46,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7437,
+        "peak_dbfs": -7.4181,
+        "zero_crossing_rate": 0.0675305
+      }
+    },
+    "grain_000118": {
+      "id": "grain_000118",
+      "path": "grains/grain_000118.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 97.44,
+      "end_sec": 98.15,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0537,
+        "peak_dbfs": -11.1549,
+        "zero_crossing_rate": 0.0694027
+      }
+    },
+    "grain_000119": {
+      "id": "grain_000119",
+      "path": "grains/grain_000119.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 98.13,
+      "end_sec": 98.79,
+      "duration_sec": 0.66,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3864,
+        "peak_dbfs": -12.3279,
+        "zero_crossing_rate": 0.0666209
+      }
+    },
+    "grain_000120": {
+      "id": "grain_000120",
+      "path": "grains/grain_000120.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 98.77,
+      "end_sec": 99.74,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1854,
+        "peak_dbfs": -10.1481,
+        "zero_crossing_rate": 0.0648494
+      }
+    },
+    "grain_000121": {
+      "id": "grain_000121",
+      "path": "grains/grain_000121.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 99.72,
+      "end_sec": 100.74,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2939,
+        "peak_dbfs": -7.4831,
+        "zero_crossing_rate": 0.070074
+      }
+    },
+    "grain_000122": {
+      "id": "grain_000122",
+      "path": "grains/grain_000122.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 100.72,
+      "end_sec": 101.68,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.1856,
+        "peak_dbfs": -9.5732,
+        "zero_crossing_rate": 0.0709815
+      }
+    },
+    "grain_000123": {
+      "id": "grain_000123",
+      "path": "grains/grain_000123.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 101.66,
+      "end_sec": 102.28,
+      "duration_sec": 0.62,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9322,
+        "peak_dbfs": -10.465,
+        "zero_crossing_rate": 0.08255
+      }
+    },
+    "grain_000124": {
+      "id": "grain_000124",
+      "path": "grains/grain_000124.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 102.26,
+      "end_sec": 102.9,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6869,
+        "peak_dbfs": -10.3674,
+        "zero_crossing_rate": 0.0730255
+      }
+    },
+    "grain_000125": {
+      "id": "grain_000125",
+      "path": "grains/grain_000125.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 102.88,
+      "end_sec": 103.59,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9313,
+        "peak_dbfs": -11.1924,
+        "zero_crossing_rate": 0.0725327
+      }
+    },
+    "grain_000126": {
+      "id": "grain_000126",
+      "path": "grains/grain_000126.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 103.57,
+      "end_sec": 104.32,
+      "duration_sec": 0.75,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9969,
+        "peak_dbfs": -10.0127,
+        "zero_crossing_rate": 0.0754369
+      }
+    },
+    "grain_000127": {
+      "id": "grain_000127",
+      "path": "grains/grain_000127.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 104.3,
+      "end_sec": 104.99,
+      "duration_sec": 0.69,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2031,
+        "peak_dbfs": -11.2425,
+        "zero_crossing_rate": 0.0725319
+      }
+    },
+    "grain_000128": {
+      "id": "grain_000128",
+      "path": "grains/grain_000128.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 104.97,
+      "end_sec": 105.88,
+      "duration_sec": 0.91,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.0554,
+        "peak_dbfs": -11.4917,
+        "zero_crossing_rate": 0.0672813
+      }
+    },
+    "grain_000129": {
+      "id": "grain_000129",
+      "path": "grains/grain_000129.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 105.86,
+      "end_sec": 106.79,
+      "duration_sec": 0.93,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3939,
+        "peak_dbfs": -11.2068,
+        "zero_crossing_rate": 0.0758071
+      }
+    },
+    "grain_000130": {
+      "id": "grain_000130",
+      "path": "grains/grain_000130.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 106.77,
+      "end_sec": 107.43,
+      "duration_sec": 0.66,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.5764,
+        "peak_dbfs": -11.0939,
+        "zero_crossing_rate": 0.0577564
+      }
+    },
+    "grain_000131": {
+      "id": "grain_000131",
+      "path": "grains/grain_000131.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 107.41,
+      "end_sec": 108.37,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3279,
+        "peak_dbfs": -6.7116,
+        "zero_crossing_rate": 0.0771466
+      }
+    },
+    "grain_000132": {
+      "id": "grain_000132",
+      "path": "grains/grain_000132.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 108.35,
+      "end_sec": 109.1,
+      "duration_sec": 0.75,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.5543,
+        "peak_dbfs": -9.6429,
+        "zero_crossing_rate": 0.0789744
+      }
+    },
+    "grain_000133": {
+      "id": "grain_000133",
+      "path": "grains/grain_000133.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 109.08,
+      "end_sec": 109.82,
+      "duration_sec": 0.74,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6662,
+        "peak_dbfs": -10.3543,
+        "zero_crossing_rate": 0.0776821
+      }
+    },
+    "grain_000134": {
+      "id": "grain_000134",
+      "path": "grains/grain_000134.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 109.8,
+      "end_sec": 110.61,
+      "duration_sec": 0.81,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3784,
+        "peak_dbfs": -7.8686,
+        "zero_crossing_rate": 0.0694289
+      }
+    },
+    "grain_000135": {
+      "id": "grain_000135",
+      "path": "grains/grain_000135.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 110.59,
+      "end_sec": 111.39,
+      "duration_sec": 0.8,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8342,
+        "peak_dbfs": -11.4411,
+        "zero_crossing_rate": 0.0698716
+      }
+    },
+    "grain_000136": {
+      "id": "grain_000136",
+      "path": "grains/grain_000136.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 111.37,
+      "end_sec": 112.27,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3981,
+        "peak_dbfs": -9.9466,
+        "zero_crossing_rate": 0.0702714
+      }
+    },
+    "grain_000137": {
+      "id": "grain_000137",
+      "path": "grains/grain_000137.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 112.25,
+      "end_sec": 113.26,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.1095,
+        "peak_dbfs": -9.1724,
+        "zero_crossing_rate": 0.0678491
+      }
+    },
+    "grain_000138": {
+      "id": "grain_000138",
+      "path": "grains/grain_000138.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 113.24,
+      "end_sec": 114.14,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.1651,
+        "peak_dbfs": -4.3656,
+        "zero_crossing_rate": 0.0679785
+      }
+    },
+    "grain_000139": {
+      "id": "grain_000139",
+      "path": "grains/grain_000139.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 114.12,
+      "end_sec": 114.84,
+      "duration_sec": 0.72,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.3453,
+        "peak_dbfs": -9.5064,
+        "zero_crossing_rate": 0.0626122
+      }
+    },
+    "grain_000140": {
+      "id": "grain_000140",
+      "path": "grains/grain_000140.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 114.82,
+      "end_sec": 115.76,
+      "duration_sec": 0.94,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4555,
+        "peak_dbfs": -8.987,
+        "zero_crossing_rate": 0.0614672
+      }
+    },
+    "grain_000141": {
+      "id": "grain_000141",
+      "path": "grains/grain_000141.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 115.74,
+      "end_sec": 116.76,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9845,
+        "peak_dbfs": -8.9706,
+        "zero_crossing_rate": 0.0611147
+      }
+    },
+    "grain_000142": {
+      "id": "grain_000142",
+      "path": "grains/grain_000142.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 116.74,
+      "end_sec": 117.51,
+      "duration_sec": 0.77,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4744,
+        "peak_dbfs": -8.1418,
+        "zero_crossing_rate": 0.0687655
+      }
+    },
+    "grain_000143": {
+      "id": "grain_000143",
+      "path": "grains/grain_000143.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 117.49,
+      "end_sec": 118.39,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3986,
+        "peak_dbfs": -11.4649,
+        "zero_crossing_rate": 0.0617048
+      }
+    },
+    "grain_000144": {
+      "id": "grain_000144",
+      "path": "grains/grain_000144.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 118.37,
+      "end_sec": 118.99,
+      "duration_sec": 0.62,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.6066,
+        "peak_dbfs": -8.3812,
+        "zero_crossing_rate": 0.0570206
+      }
+    },
+    "grain_000145": {
+      "id": "grain_000145",
+      "path": "grains/grain_000145.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 118.97,
+      "end_sec": 119.97,
+      "duration_sec": 1.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.8695,
+        "peak_dbfs": -10.4191,
+        "zero_crossing_rate": 0.0648994
+      }
+    },
+    "grain_000146": {
+      "id": "grain_000146",
+      "path": "grains/grain_000146.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 119.95,
+      "end_sec": 120.92,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.6749,
+        "peak_dbfs": -7.7598,
+        "zero_crossing_rate": 0.0651534
+      }
+    },
+    "grain_000147": {
+      "id": "grain_000147",
+      "path": "grains/grain_000147.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 120.9,
+      "end_sec": 121.58,
+      "duration_sec": 0.68,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1716,
+        "peak_dbfs": -9.7229,
+        "zero_crossing_rate": 0.0719645
+      }
+    },
+    "grain_000148": {
+      "id": "grain_000148",
+      "path": "grains/grain_000148.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 121.56,
+      "end_sec": 122.42,
+      "duration_sec": 0.86,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9994,
+        "peak_dbfs": -11.0512,
+        "zero_crossing_rate": 0.0695583
+      }
+    },
+    "grain_000149": {
+      "id": "grain_000149",
+      "path": "grains/grain_000149.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 122.4,
+      "end_sec": 123.02,
+      "duration_sec": 0.62,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8815,
+        "peak_dbfs": -11.8566,
+        "zero_crossing_rate": 0.0730771
+      }
+    },
+    "grain_000150": {
+      "id": "grain_000150",
+      "path": "grains/grain_000150.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 123.0,
+      "end_sec": 123.72,
+      "duration_sec": 0.72,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8989,
+        "peak_dbfs": -9.1397,
+        "zero_crossing_rate": 0.0738244
+      }
+    },
+    "grain_000151": {
+      "id": "grain_000151",
+      "path": "grains/grain_000151.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 123.7,
+      "end_sec": 124.69,
+      "duration_sec": 0.99,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.656,
+        "peak_dbfs": -7.415,
+        "zero_crossing_rate": 0.081039
+      }
+    },
+    "grain_000152": {
+      "id": "grain_000152",
+      "path": "grains/grain_000152.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 124.67,
+      "end_sec": 125.64,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.5717,
+        "peak_dbfs": -6.8721,
+        "zero_crossing_rate": 0.0842529
+      }
+    },
+    "grain_000153": {
+      "id": "grain_000153",
+      "path": "grains/grain_000153.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 125.62,
+      "end_sec": 126.52,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0209,
+        "peak_dbfs": -9.8604,
+        "zero_crossing_rate": 0.0787876
+      }
+    },
+    "grain_000154": {
+      "id": "grain_000154",
+      "path": "grains/grain_000154.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 126.5,
+      "end_sec": 127.47,
+      "duration_sec": 0.97,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.1181,
+        "peak_dbfs": -9.4151,
+        "zero_crossing_rate": 0.0753226
+      }
+    },
+    "grain_000155": {
+      "id": "grain_000155",
+      "path": "grains/grain_000155.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 127.45,
+      "end_sec": 128.07,
+      "duration_sec": 0.62,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2402,
+        "peak_dbfs": -10.1609,
+        "zero_crossing_rate": 0.069639
+      }
+    },
+    "grain_000156": {
+      "id": "grain_000156",
+      "path": "grains/grain_000156.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 128.05,
+      "end_sec": 128.76,
+      "duration_sec": 0.71,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6818,
+        "peak_dbfs": -6.8051,
+        "zero_crossing_rate": 0.0727244
+      }
+    },
+    "grain_000157": {
+      "id": "grain_000157",
+      "path": "grains/grain_000157.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 128.74,
+      "end_sec": 129.38,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.287,
+        "peak_dbfs": -12.5893,
+        "zero_crossing_rate": 0.0672855
+      }
+    },
+    "grain_000158": {
+      "id": "grain_000158",
+      "path": "grains/grain_000158.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 129.36,
+      "end_sec": 130.32,
+      "duration_sec": 0.96,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.72,
+        "peak_dbfs": -7.8189,
+        "zero_crossing_rate": 0.0632101
+      }
+    },
+    "grain_000159": {
+      "id": "grain_000159",
+      "path": "grains/grain_000159.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 130.3,
+      "end_sec": 131.3,
+      "duration_sec": 1.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8131,
+        "peak_dbfs": -12.219,
+        "zero_crossing_rate": 0.0620649
+      }
+    },
+    "grain_000160": {
+      "id": "grain_000160",
+      "path": "grains/grain_000160.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 131.28,
+      "end_sec": 132.1,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1875,
+        "peak_dbfs": -11.2735,
+        "zero_crossing_rate": 0.0563314
+      }
+    },
+    "grain_000161": {
+      "id": "grain_000161",
+      "path": "grains/grain_000161.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 132.08,
+      "end_sec": 132.9,
+      "duration_sec": 0.82,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7526,
+        "peak_dbfs": -9.6946,
+        "zero_crossing_rate": 0.0660657
+      }
+    },
+    "grain_000162": {
+      "id": "grain_000162",
+      "path": "grains/grain_000162.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 132.88,
+      "end_sec": 133.75,
+      "duration_sec": 0.87,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4238,
+        "peak_dbfs": -9.1961,
+        "zero_crossing_rate": 0.074076
+      }
+    },
+    "grain_000163": {
+      "id": "grain_000163",
+      "path": "grains/grain_000163.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 133.73,
+      "end_sec": 134.73,
+      "duration_sec": 1.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.6749,
+        "peak_dbfs": -3.9636,
+        "zero_crossing_rate": 0.0717703
+      }
+    },
+    "grain_000164": {
+      "id": "grain_000164",
+      "path": "grains/grain_000164.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 134.71,
+      "end_sec": 135.73,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.6925,
+        "peak_dbfs": -8.7109,
+        "zero_crossing_rate": 0.0791223
+      }
+    },
+    "grain_000165": {
+      "id": "grain_000165",
+      "path": "grains/grain_000165.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 135.71,
+      "end_sec": 136.43,
+      "duration_sec": 0.72,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7041,
+        "peak_dbfs": -9.139,
+        "zero_crossing_rate": 0.0802494
+      }
+    },
+    "grain_000166": {
+      "id": "grain_000166",
+      "path": "grains/grain_000166.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 136.41,
+      "end_sec": 137.08,
+      "duration_sec": 0.67,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -23.9855,
+        "peak_dbfs": -11.0417,
+        "zero_crossing_rate": 0.0691126
+      }
+    },
+    "grain_000167": {
+      "id": "grain_000167",
+      "path": "grains/grain_000167.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 137.06,
+      "end_sec": 138.07,
+      "duration_sec": 1.01,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4491,
+        "peak_dbfs": -11.3349,
+        "zero_crossing_rate": 0.0649753
+      }
+    },
+    "grain_000168": {
+      "id": "grain_000168",
+      "path": "grains/grain_000168.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 138.05,
+      "end_sec": 138.7,
+      "duration_sec": 0.65,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8875,
+        "peak_dbfs": -11.7904,
+        "zero_crossing_rate": 0.067297
+      }
+    },
+    "grain_000169": {
+      "id": "grain_000169",
+      "path": "grains/grain_000169.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 138.68,
+      "end_sec": 139.32,
+      "duration_sec": 0.64,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8207,
+        "peak_dbfs": -10.226,
+        "zero_crossing_rate": 0.0695178
+      }
+    },
+    "grain_000170": {
+      "id": "grain_000170",
+      "path": "grains/grain_000170.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 139.3,
+      "end_sec": 140.11,
+      "duration_sec": 0.81,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.0089,
+        "peak_dbfs": -12.4216,
+        "zero_crossing_rate": 0.0631859
+      }
+    },
+    "grain_000171": {
+      "id": "grain_000171",
+      "path": "grains/grain_000171.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 140.09,
+      "end_sec": 140.75,
+      "duration_sec": 0.66,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.308,
+        "peak_dbfs": -8.552,
+        "zero_crossing_rate": 0.0635973
+      }
+    },
+    "grain_000172": {
+      "id": "grain_000172",
+      "path": "grains/grain_000172.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 140.73,
+      "end_sec": 141.4,
+      "duration_sec": 0.67,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -25.6042,
+        "peak_dbfs": -11.84,
+        "zero_crossing_rate": 0.0705002
+      }
+    },
+    "grain_000173": {
+      "id": "grain_000173",
+      "path": "grains/grain_000173.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 141.38,
+      "end_sec": 142.22,
+      "duration_sec": 0.84,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9177,
+        "peak_dbfs": -10.9179,
+        "zero_crossing_rate": 0.074454
+      }
+    },
+    "grain_000174": {
+      "id": "grain_000174",
+      "path": "grains/grain_000174.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 142.2,
+      "end_sec": 143.14,
+      "duration_sec": 0.94,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.2588,
+        "peak_dbfs": -7.9292,
+        "zero_crossing_rate": 0.0775336
+      }
+    },
+    "grain_000175": {
+      "id": "grain_000175",
+      "path": "grains/grain_000175.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 143.12,
+      "end_sec": 143.82,
+      "duration_sec": 0.7,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.9431,
+        "peak_dbfs": -9.0822,
+        "zero_crossing_rate": 0.0786226
+      }
+    },
+    "grain_000176": {
+      "id": "grain_000176",
+      "path": "grains/grain_000176.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 143.8,
+      "end_sec": 144.7,
+      "duration_sec": 0.9,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.3424,
+        "peak_dbfs": -6.238,
+        "zero_crossing_rate": 0.0785356
+      }
+    },
+    "grain_000177": {
+      "id": "grain_000177",
+      "path": "grains/grain_000177.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 144.68,
+      "end_sec": 145.68,
+      "duration_sec": 1.0,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.7003,
+        "peak_dbfs": -10.4517,
+        "zero_crossing_rate": 0.0746275
+      }
+    },
+    "grain_000178": {
+      "id": "grain_000178",
+      "path": "grains/grain_000178.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 145.66,
+      "end_sec": 146.61,
+      "duration_sec": 0.95,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.1229,
+        "peak_dbfs": -9.6663,
+        "zero_crossing_rate": 0.0684346
+      }
+    },
+    "grain_000179": {
+      "id": "grain_000179",
+      "path": "grains/grain_000179.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 146.59,
+      "end_sec": 147.43,
+      "duration_sec": 0.84,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.8422,
+        "peak_dbfs": -7.4926,
+        "zero_crossing_rate": 0.0714575
+      }
+    },
+    "grain_000180": {
+      "id": "grain_000180",
+      "path": "grains/grain_000180.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 147.41,
+      "end_sec": 148.29,
+      "duration_sec": 0.88,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -24.4184,
+        "peak_dbfs": -8.2528,
+        "zero_crossing_rate": 0.0674105
+      }
+    },
+    "grain_000181": {
+      "id": "grain_000181",
+      "path": "grains/grain_000181.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 148.27,
+      "end_sec": 149.29,
+      "duration_sec": 1.02,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -27.012,
+        "peak_dbfs": -10.0911,
+        "zero_crossing_rate": 0.0782553
+      }
+    },
+    "grain_000182": {
+      "id": "grain_000182",
+      "path": "grains/grain_000182.wav",
+      "source_file": "/Users/derong/Desktop/Research/sound grain/NHU05104248.wav",
+      "start_sec": 149.27,
+      "end_sec": 149.67,
+      "duration_sec": 0.4,
+      "sample_rate": 44100,
+      "channels": 2,
+      "features": {
+        "rms_dbfs": -30.8577,
+        "peak_dbfs": -16.6085,
+        "zero_crossing_rate": 0.0769318
+      }
+    }
+  },
+  "grain_count": 183,
+  "snapshot": "snapshot.png"
+}

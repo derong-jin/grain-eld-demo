@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sound Grain Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+      "three/examples/jsm/": "https://unpkg.com/three@0.165.0/examples/jsm/",
+      "@mkkellogg/gaussian-splats-3d": "https://cdn.jsdelivr.net/npm/@mkkellogg/gaussian-splats-3d@0.4.7/build/gaussian-splats-3d.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Title Banner -->
+  <div class="title-banner">
+    Sound Grain Viewer
+  </div>
+
+  <!-- Control Panel (Left Side) -->
+  <div id="controlPanel" class="panel-box">
+
+    <!-- Scene Selection Section -->
+    <div id="ui" class="panel-section">
+      <div class="panel-title" data-target="body-scene">
+        Scene
+        <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="panel-body" id="body-scene">
+        <label for="scenePreset">Scene Preset</label>
+        <select id="scenePreset">
+          <option value="marble-scenes/spring1" selected>Spring1 · Sound Grains</option>
+          <option value="marble-scenes/spring">Spring</option>
+          <option value="">Custom path</option>
+        </select>
+        <label for="scenePathInput">Scene Path</label>
+        <input
+          id="scenePathInput"
+          type="text"
+          value="marble-scenes/spring1"
+          placeholder="e.g. marble-scenes/spring"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button id="loadGaussianScene">Load Scene</button>
+        <div id="sceneLoadStatus" class="grain-render-status" role="status" aria-live="polite">
+          Choose a scene, then click Load Scene.
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualization Controls Section -->
+    <div id="ui2" class="panel-section">
+      <div class="panel-title" data-target="body-viz">
+        Visualization
+        <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="panel-body" id="body-viz">
+        <div class="button-group">
+          <button id="toggleStaticSourceVisibility">Toggle Centroid Visibility</button>
+          <button id="toggleClusterVisibility">Toggle Cluster Visibility</button>
+          <button id="goToOrigin">Reset Camera to Origin</button>
+          <button id="toggleEldWindow" aria-controls="eldWindow" aria-expanded="false" disabled>Open ELD Inspector</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio Controls Section -->
+    <div class="panel-section">
+      <div class="panel-title" data-target="body-audio">
+        Audio
+        <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="panel-body" id="body-audio">
+        <span class="controls-label">Rendering Method</span>
+        <button id="toggleVolumeAudio">Volume Audio</button>
+        <span class="controls-label">Source Content</span>
+        <button id="toggleGrainRendering" disabled>Loop Audio</button>
+        <div id="grainRenderingStatus" class="grain-render-status" role="status" aria-live="polite">
+          Load a scene to inspect grain assets.
+        </div>
+        <span class="controls-label">Grain Preprocessing</span>
+        <div class="grain-preprocess-grid">
+          <div class="grain-preprocess-field">
+            <label for="grainWindowKind">Window</label>
+            <select id="grainWindowKind" disabled>
+              <option value="none">None</option>
+              <option value="tukey" selected>Tukey</option>
+              <option value="hann">Hann</option>
+            </select>
+          </div>
+          <div class="grain-preprocess-field">
+            <label for="grainDenoiseKind">Denoise</label>
+            <select id="grainDenoiseKind" disabled>
+              <option value="none" selected>None</option>
+              <option value="spectral">Spectral</option>
+            </select>
+          </div>
+        </div>
+        <div id="grainWindowOptions" class="grain-preprocess-options">
+          <div class="grain-preprocess-field">
+            <label for="grainWindowAlpha">Tukey α</label>
+            <input id="grainWindowAlpha" type="number" min="0" max="1" step="0.05" value="0.25" disabled>
+          </div>
+        </div>
+        <div id="grainDenoiseOptions" class="grain-preprocess-options" hidden>
+          <div class="grain-preprocess-field">
+            <label for="grainDenoiseStrength">Strength</label>
+            <input id="grainDenoiseStrength" type="number" min="0" max="100" step="0.5" value="1" disabled>
+          </div>
+          <div class="grain-preprocess-field">
+            <label for="grainDenoiseMaxAtten">Max atten. (dB)</label>
+            <input id="grainDenoiseMaxAtten" type="number" min="0" max="60" step="1" value="18" disabled>
+          </div>
+        </div>
+        <!-- <span class="controls-label">Spatial Mode</span>
+        <button id="toggleHRIR">HRIR Binaural (Loading...)</button> -->
+        <span class="controls-label">Playback</span>
+        <button id="togglePlay" disabled>Pause</button>
+      </div>
+    </div>
+
+    <!-- Stereo Volume Section -->
+    <div class="panel-section">
+      <div class="panel-title" data-target="body-stereo">
+        Stereo Output
+        <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="panel-body" id="body-stereo">
+        <div class="volume-row">
+          <span class="volume-channel">L</span>
+          <div class="volume-track"><div id="leftVolume" class="volume-fill"></div></div>
+        </div>
+        <div class="volume-row">
+          <span class="volume-channel">R</span>
+          <div class="volume-track"><div id="rightVolume" class="volume-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Metrics Section -->
+    <div id="metrics" class="panel-section">
+      <div class="panel-title" data-target="body-perf">
+        Performance
+        <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="panel-body" id="body-perf">
+        <div class="metric-row"><span class="metric-label">Callback Time (Last):</span><span class="metric-value"><span id="cbLast">-</span> ms</span></div>
+        <div class="metric-row"><span class="metric-label">Callback Time (Avg):</span><span class="metric-value"><span id="cbAvg">-</span> ms</span></div>
+        <div class="metric-row"><span class="metric-label">Sample Rate:</span><span class="metric-value"><span id="sampleRate">-</span> Hz</span></div>
+        <div class="metric-row"><span class="metric-label">Buffer Size:</span><span class="metric-value"><span id="bufferSamples">-</span> frames</span></div>
+        <div class="metric-row"><span class="metric-label">Buffer Latency:</span><span class="metric-value"><span id="bufferMs">-</span> ms</span></div>
+      </div>
+    </div>
+
+    <!-- Controls / Keyboard Shortcuts Section -->
+    <div class="panel-section">
+      <div class="panel-title" data-target="body-keys">
+        Controls
+        <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="panel-body" id="body-keys">
+        <div class="keyboard-shortcuts">
+          <div class="shortcut-row"><span class="shortcut-key">W/S</span><span class="shortcut-desc">Move Forward/Backward</span></div>
+          <div class="shortcut-row"><span class="shortcut-key">A/D</span><span class="shortcut-desc">Move Left/Right</span></div>
+          <div class="shortcut-row"><span class="shortcut-key">I/K</span><span class="shortcut-desc">Move Up/Down</span></div>
+          <div class="shortcut-row"><span class="shortcut-key">Mouse</span><span class="shortcut-desc">Look Around</span></div>
+          <div class="shortcut-row"><span class="shortcut-key">Space</span><span class="shortcut-desc">Play/Pause Audio</span></div>
+        </div>
+        <!-- <div class="info-note">Requires an HTTP server — file:// URLs are not supported</div> -->
+      </div>
+    </div>
+
+  </div>
+  <button id="panelToggleBtn" title="Toggle panel">
+    <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 1L3 5l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Minimap -->
+  <div id="minimap">
+    <div class="minimap-title">Overview</div>
+    <div id="minimapContainer"></div>
+    <canvas id="minimapCanvas2D" width="160" height="160"></canvas>
+    <div id="minimapLoadingOverlay" class="minimap-loading-overlay">
+      <div class="minimap-loading-text">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Optional direct-path ELD inspector -->
+  <section id="eldWindow" class="eld-window panel-box" aria-labelledby="eldWindowTitle" hidden>
+    <div class="eld-window-header">
+      <div>
+        <div id="eldWindowTitle" class="eld-window-title">Event Loudness Density</div>
+        <div id="eldWindowSubtitle" class="eld-window-subtitle">Direct path · Histogram representation</div>
+      </div>
+      <button id="closeEldWindow" class="eld-close" type="button" aria-label="Close ELD inspector">×</button>
+    </div>
+    <div class="eld-window-body">
+      <div class="eld-method-grid">
+        <div class="eld-control-field">
+          <label for="eldMethod">Representation</label>
+          <select id="eldMethod">
+            <option value="histogram" selected>Histogram (bins)</option>
+            <option value="gaussian">Gaussian ELD</option>
+            <option value="kde">KDE</option>
+            <option id="eldDummyMethodOption" value="dummy-gaussian" disabled>Dummy Gaussian (single source)</option>
+          </select>
+        </div>
+        <div id="eldHistogramOptions" class="eld-method-option eld-control-field">
+          <label for="eldHistogramBinWidth">Bin width (dB)</label>
+          <input id="eldHistogramBinWidth" type="number" min="0.1" max="24" step="0.1" value="3">
+        </div>
+        <div id="eldKdeOptions" class="eld-method-option eld-control-field" hidden>
+          <label for="eldKdeBandwidth">Bandwidth (dB)</label>
+          <input id="eldKdeBandwidth" type="number" min="0.1" max="24" step="0.1" value="1.5">
+        </div>
+        <div id="eldGaussianOptions" class="eld-method-option eld-method-option-split" hidden>
+          <div class="eld-control-field">
+            <label for="eldGaussianSigmaScale">σ scale</label>
+            <input id="eldGaussianSigmaScale" type="number" min="0.1" max="10" step="0.1" value="1">
+          </div>
+          <div class="eld-control-field">
+            <label for="eldGaussianSigmaFloor">Min σ (dB)</label>
+            <input id="eldGaussianSigmaFloor" type="number" min="0.1" max="24" step="0.1" value="0.5">
+          </div>
+        </div>
+        <div id="eldDummyOptions" class="eld-method-option eld-method-option-split" hidden>
+          <div class="eld-control-field">
+            <label for="eldDummyMean">μ (dB)</label>
+            <input id="eldDummyMean" type="number" min="-120" max="24" step="0.5" value="-20">
+          </div>
+          <div class="eld-control-field">
+            <label for="eldDummySigma">σ (dB)</label>
+            <input id="eldDummySigma" type="number" min="0.1" max="20" step="0.1" value="4">
+          </div>
+        </div>
+      </div>
+
+      <details class="eld-display-options">
+        <summary>
+          <span>Display options</span>
+          <span id="eldResolvedRange">X: adaptive</span>
+        </summary>
+        <div class="eld-range-grid">
+          <div class="eld-range-group">
+            <div class="eld-control-field">
+              <label for="eldXLengthMode">Range length</label>
+              <select id="eldXLengthMode">
+                <option value="adaptive" selected>Adaptive</option>
+                <option value="fixed">Fixed</option>
+              </select>
+            </div>
+            <div class="eld-control-field">
+              <label for="eldXSpanDb">Fixed span (dB)</label>
+              <input id="eldXSpanDb" type="number" min="1" max="240" step="1" value="60" disabled>
+            </div>
+          </div>
+          <div class="eld-range-group">
+            <div class="eld-control-field">
+              <label for="eldXPositionMode">Range position</label>
+              <select id="eldXPositionMode">
+                <option value="adaptive" selected>Adaptive</option>
+                <option value="fixed">Fixed</option>
+              </select>
+            </div>
+            <div class="eld-control-field">
+              <label for="eldXCenterDb">Fixed center (dB)</label>
+              <input id="eldXCenterDb" type="number" min="-300" max="100" step="1" value="-30" disabled>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <fieldset class="eld-source-fieldset">
+        <legend>Source point clouds</legend>
+        <div id="eldSourceList" class="eld-source-list">
+          <div class="eld-empty">Load a scene to inspect its sources.</div>
+        </div>
+      </fieldset>
+      <canvas
+        id="eldCanvas"
+        class="eld-canvas"
+        role="img"
+        aria-label="Event loudness density curves for the selected source point clouds"
+      ></canvas>
+      <div id="eldStats" class="eld-stats">No source selected.</div>
+    </div>
+  </section>
+
+  <div id="mainLoadingOverlay" class="main-loading-overlay">
+    <div class="main-loading-card">
+      <div class="main-loading-spinner"></div>
+      <div class="main-loading-text">Loading scene...</div>
+    </div>
+  </div>
+
+  <script type="module" src="demo.js"></script>
+</body>
+</html>

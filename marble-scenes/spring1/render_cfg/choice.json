@@ -1,0 +1,1 @@
+[{"class_label": "stream", "pcd": "02_points_down.ply", "centroid": [0.6317384243011475, -0.4902130365371704, -2.7796239852905273], "pcd_points": "02_points.ply", "pcd_points_down": "02_points_down.ply", "pcd_weights": "02_points_weights.npy", "audio_path": "1_stream_1_0.wav", "grain_path": "NHU05104248"}]
