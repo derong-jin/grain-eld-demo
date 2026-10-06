@@ -1,11 +1,17 @@
 # Point-cloud ELD visualization and grain-rendering model
 
-This note documents the optional ELD Inspector in index.html. It visualizes
+This note documents the ELD Inspector in index.html, which opens by default. It visualizes
 direct-path event loudness distributions derived from weighted source point
 clouds. Histogram, Gaussian, and KDE derive their parameters from those
 samples; a fourth manual Dummy Gaussian is available in eligible single-source
 scenes. The selected representation drives both the plot and the relative
-event levels of the optional real-time grain renderer.
+event levels of the real-time grain renderer in **Grain Rendering** (Spring1).
+
+**ELD Visualization** (Spring) uses the same ELD calculation for 14 weighted
+geometries, without loading or rendering any audio. Its point clouds are data
+only: no source meshes, centroid markers or labels are added to the 3D scene.
+ELD samples already use scene coordinates, so this computation does not need a
+Three.js render object. Only the Gaussian-splat environment and ELD chart are drawn.
 
 ## 1. Cornell ELD definition
 
@@ -173,8 +179,8 @@ and reads only the relative WAV paths stored in `dictionary.json`. Grain WAVs
 are decoded with bounded concurrency when a grain-capable scene loads (Grain
 Rendering is the default), or reloaded when a preprocessing option changes. During
 preparation for Grain Rendering, both buses of grain-capable sources are set
-to zero and their active grain nodes are stopped. Other sources, including
-Spring's birds and insects, continue their original loops. Muted loops keep
+to zero and their active grain nodes are stopped. Other audio sources in custom
+scenes continue their original loops. Muted loops keep
 their playback position. Preparation while Loop Rendering is selected leaves
 the loops audible. Users can return to Loop during loading or after a failure;
 late results cannot change that choice. A failed library is named and can be retried.
@@ -182,9 +188,9 @@ late results cannot change that choice. A failed library is named and can be ret
 Libraries are shared within a scene by absolute asset URL, AudioContext sample
 rate and preprocessing settings. WAV decoding, window/denoise processing and
 RMS statistics happen once per library. ELD point samples, gain, panning,
-event times and active audio nodes remain per source. Spring's seven grain
-sources use three libraries, totaling 231 unique grains. Scene teardown aborts
-pending library work and releases buffers.
+event times and active audio nodes remain per source. The included grain scene
+uses one library with 183 grains. Scene teardown aborts pending library work and
+releases buffers; entering the ELD-only scene also closes the audio context.
 
 The browser demo does not load an external `eld.json`. Its grain-event
 loudness distribution comes from the Representation selected in the inspector:
@@ -251,10 +257,6 @@ decode WAV -> spectral denoise (optional) -> grain window (optional)
 Spectral mode reads the `noise_profile.path` declared in `dictionary.json`.
 The parent research project’s `build_noise_profile.py --attach` estimates that profile from inactive regions
 of the original recording as a Hann-windowed, median-corrected periodogram.
-Spring's continuous leaf recording lacks enough inactive audio, so its offline
-builder uses the lowest-energy 5% of frames with the same spectral estimator.
-This includes quiet leaf texture and is not an independently measured noise floor;
-see [audio source processing](AUDIO_SOURCES.md).
 The real-time mask uses linked stereo power, two frequency-smoothing passes,
 5 ms attack, 60 ms release, and overlap-add reconstruction. Processing runs in
 a Web Worker; processed buffers replace the decoded cache only after the full

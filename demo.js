@@ -59,7 +59,8 @@ const c = 343.3;
 
 // Real-time grain rendering is the default for scenes with grain assets.
 // Grains load after the scene, then are scheduled on AudioContext time with a
-// short look-ahead window. Scenes without grains use the original loops.
+// short look-ahead window. Audio sources without grains use original loops.
+// Entries without audio_path are ELD data only: no audio graph or source overlays.
 const GRAIN_LOAD_CONCURRENCY = 6;
 const GRAIN_SCHEDULER_INTERVAL_MS = 25;
 const GRAIN_SCHEDULER_LOOKAHEAD_SEC = 0.1;
@@ -95,7 +96,7 @@ let grainRequestedContentMode = 'loop';
 let grainSchedulerTimer = null;
 let grainModeGeneration = 0;
 
-// Optional direct-path ELD inspector. Gaussian, KDE, and histogram views use
+// Direct-path ELD inspector (open by default). Gaussian, KDE, and histogram views use
 // the same weighted point-cloud loudness samples. A manual Dummy Gaussian is
 // also available as a representation when exactly one source is live and has
 // grain assets. The selected representation drives both the plot and grain
@@ -322,6 +323,16 @@ function resetVisualizationState() {
   });
 }
 
+function hasSceneAudio() {
+  return staticSources.some(source => !source.disposed && source.srcNode);
+}
+
+function syncScenePresentation() {
+  const eldOnly = staticSources.some(source => !source.disposed) && !hasSceneAudio();
+  document.querySelectorAll('[data-audio-controls], [data-source-overlay-controls]')
+    .forEach(element => { element.hidden = eldOnly; });
+}
+
 function getGrainCapableSources() {
   return staticSources.filter(source => !source.disposed && source.grainPath);
 }
@@ -423,7 +434,7 @@ function setGrainRenderingStatus(message, state = '') {
 
 function updateGrainRenderingUi() {
   if (!grainToggleButton) return;
-  const liveSources = staticSources.filter(source => !source.disposed);
+  const liveSources = staticSources.filter(source => !source.disposed && source.srcNode);
   const sources = getGrainCapableSources();
   const originalCount = liveSources.length - sources.length;
   const loadingSources = sources.filter(source => source.grainState === 'loading');
@@ -434,7 +445,7 @@ function updateGrainRenderingUi() {
   const wantsGrains = grainRequestedContentMode === 'grain';
   syncGrainPreprocessingUi();
 
-  const currentMode = !liveSources.length ? 'No scene loaded'
+  const currentMode = !liveSources.length ? (staticSources.length ? 'ELD visualization only' : 'No scene loaded')
     : grainRenderingEnabled ? 'Grain Rendering'
     : !wantsGrains ? 'Loop Rendering'
     : loadingSources.length ? 'Preparing Grain Rendering'
@@ -458,6 +469,7 @@ function updateGrainRenderingUi() {
   if (!sources.length) {
     setGrainRenderingStatus(liveSources.length
       ? 'Grain rendering unavailable for this scene. Loop audio only.'
+      : staticSources.length ? 'ELD visualization only. No audio rendering.'
       : 'Load a scene to inspect grain assets.');
     return;
   }
@@ -839,6 +851,7 @@ function setUiLocked(isLocked) {
     eldToggleButton.disabled = isLocked || staticSources.length === 0;
   }
   updateGrainRenderingUi();
+  syncScenePresentation();
 }
 
 function sourceColorForIndex(index) {
@@ -988,6 +1001,7 @@ async function ensureEldPointSamples(source) {
       const loadedWeights = source.weightsUrl
         ? await loadNpyFloat32(source.weightsUrl)
         : null;
+      if (source.disposed || source.sceneRequestId !== sceneLoadRequestId) return null;
       const positionAttribute = geometry.getAttribute('position');
       if (!positionAttribute) {
         throw new Error('ELD source PLY has no position attribute');
@@ -1005,7 +1019,7 @@ async function ensureEldPointSamples(source) {
       );
       return source.eldSamples;
     } catch (error) {
-      setEldSourceStatus(source, 'load failed');
+      if (!source.disposed) setEldSourceStatus(source, 'load failed');
       throw error;
     } finally {
       if (geometry) geometry.dispose();
@@ -1051,8 +1065,9 @@ function computeSourceLoudnessProfile(source, listenerPosition) {
   const samples = source.eldSamples;
   if (!samples || samples.positions.length === 0) return null;
 
-  source.points.updateMatrixWorld(true);
-  const matrix = source.points.matrixWorld;
+  source.points?.updateMatrixWorld(true);
+  // ELD-only entries keep samples in scene coordinates without a render object.
+  const matrix = source.points?.matrixWorld;
   const point = new THREE.Vector3();
   const sampleCount = samples.positions.length / 3;
   const loudnesses = new Float32Array(sampleCount);
@@ -1066,7 +1081,8 @@ function computeSourceLoudnessProfile(source, listenerPosition) {
   for (let index = 0; index < sampleCount; index++) {
     const weight = samples.weights ? samples.weights[index] : 1 / sampleCount;
     if (!(weight > 0) || !Number.isFinite(weight)) continue;
-    point.fromArray(samples.positions, index * 3).applyMatrix4(matrix);
+    point.fromArray(samples.positions, index * 3);
+    if (matrix) point.applyMatrix4(matrix);
     const distance = Math.max(
       point.distanceTo(listenerPosition),
       ELD_MIN_DISTANCE
@@ -2479,6 +2495,7 @@ async function handleEldSourceSelection(source, checkbox) {
     await ensureEldPointSamples(source);
     eldDirty = true;
   } catch (error) {
+    if (source.disposed || source.sceneRequestId !== sceneLoadRequestId) return;
     console.error(`Failed to load ELD data for ${source.displayName}:`, error);
     checkbox.checked = false;
     selectedEldSourceIds.delete(source.sourceId);
@@ -2815,22 +2832,6 @@ async function loadStaticSourceList(basePath, requestId) {
     updateGrainRenderingUi();
   }
 
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-      sampleRate: 48000
-    });
-    updatePlayButton();
-    updateAudioMetrics(); // ==== NEW: 初始化时更新一次 ====
-
-    // Bundled scenes use stereo panning; no HRIR assets are required.
-    if (hrirBtn) {
-      hrirBtn.textContent = 'Stereo Panning';
-      hrirBtn.disabled = true;
-    }
-  } else {
-    updateAudioMetrics(); // ==== NEW: 再 load 场景时也更新一下 ====
-  }
-
   const jsonPath = basePath + (basePath.endsWith('/') ? '' : '/') + 'render_cfg/choice.json';
   const audioDir = basePath + (basePath.endsWith('/') ? '' : '/') + 'audio/';
   const groundingDir = basePath + (basePath.endsWith('/') ? '' : '/') + 'render_cfg/';
@@ -2848,8 +2849,23 @@ async function loadStaticSourceList(basePath, requestId) {
     throw new Error(`Could not load ${jsonPath}: ${err.message}`);
   }
   if (!Array.isArray(list) || !list.some(source => source.class_label !== 'global')) {
-    throw new Error(`No playable sources in ${jsonPath}`);
+    throw new Error(`No source data in ${jsonPath}`);
   }
+
+  const hasAudio = list.some(source => source.class_label !== 'global' && source.audio_path);
+  if (hasAudio && !audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 48000 });
+    if (hrirBtn) {
+      hrirBtn.textContent = 'Stereo Panning';
+      hrirBtn.disabled = true;
+    }
+  } else if (!hasAudio && audioCtx) {
+    // Release the previous scene's audio device as well as its stopped sources.
+    await audioCtx.close();
+    audioCtx = null;
+    if (requestId !== sceneLoadRequestId) return;
+  }
+  updateAudioMetrics();
 
   for (const [sourceIndex, sourceConfig] of list.entries()) {
     const {
@@ -2866,6 +2882,28 @@ async function loadStaticSourceList(basePath, requestId) {
       continue;
     }
 
+    const sourceColor = sourceColorForIndex(sourceIndex);
+    const sourceData = {
+      sourceId: `${sourceIndex}:${pcd}`,
+      sourceIndex,
+      sceneBase: basePath,
+      sceneRequestId: requestId,
+      classLabel: class_label,
+      displayName: `${String(sourceIndex).padStart(2, '0')} · ${class_label} · ${pcd}`,
+      pcdFilename: pcd,
+      fullPcdUrl: groundingDir + (pcd_points || pcd),
+      weightsUrl: pcd_points && pcd_weights ? groundingDir + pcd_weights : null,
+      chartColor: new THREE.Color(sourceColor).getStyle(),
+      pos: new THREE.Vector3(...centroid),
+      disposed: false,
+    };
+    if (!audio_path) {
+      // Keep only the weighted geometry for ELD. Do not create audio nodes,
+      // download grains/loops, or add point clouds, centroids or labels to the scene.
+      staticSources.push(sourceData);
+      continue;
+    }
+
     const audioResponse = await fetch(audioDir + audio_path, { cache: 'no-store' });
     if (!audioResponse.ok) {
       throw new Error(`Could not load ${audioDir + audio_path}: HTTP ${audioResponse.status}`);
@@ -2874,7 +2912,6 @@ async function loadStaticSourceList(basePath, requestId) {
     if (requestId !== sceneLoadRequestId) return;
 
     // Resolve asynchronous assets before creating a playing audio graph.
-    const sourceColor = sourceColorForIndex(sourceIndex);
     const { points: src_xyzs, color: pointColor } = await loadPlyAsPoints(
       groundingDir + pcd,
       { color: sourceColor }
@@ -2995,19 +3032,7 @@ async function loadStaticSourceList(basePath, requestId) {
     }
 
     staticSources.push({
-      sourceId: `${sourceIndex}:${pcd}`,
-      sourceIndex,
-      sceneBase: basePath,
-      sceneRequestId: requestId,
-      classLabel: class_label,
-      displayName: `${String(sourceIndex).padStart(2, '0')} · ${class_label} · ${pcd}`,
-      pcdFilename: pcd,
-      fullPcdUrl: groundingDir + (pcd_points || pcd),
-      weightsUrl: pcd_points && pcd_weights
-        ? groundingDir + pcd_weights
-        : null,
-      chartColor: new THREE.Color(pointColor).getStyle(),
-      pos: new THREE.Vector3(...centroid),
+      ...sourceData,
       srcNode,
       loopBus,
       grainBus,
@@ -3016,7 +3041,6 @@ async function loadStaticSourceList(basePath, requestId) {
       centroid: src_sphere,
       points: src_xyzs,
       label: textLabel,
-      disposed: false,
       currentPlaybackRate: 1,
       grainPath: isSafeRelativeAssetPath(grainPath) ? grainPath : null,
       grainState: isSafeRelativeAssetPath(grainPath) ? 'idle' : 'unavailable',
@@ -3052,13 +3076,15 @@ async function loadStaticSourceList(basePath, requestId) {
   }
   isSingleSource = (staticSources.length === 1);
   updateStaticSources();
-  // Only grain-capable sources wait for preprocessing. Original birds/insects keep playing.
+  // Original audio can start immediately; grain sources wait for preprocessing.
   staticSources.forEach(source => {
-    if (!source.grainPath) setSourceContentBusGains(source, false, true);
+    if (source.srcNode && !source.grainPath) setSourceContentBusGains(source, false, true);
   });
   resetVisualizationState();
   rebuildEldSourceList();
+  setEldWindowOpen(true);
   updateGrainRenderingUi();
+  syncScenePresentation();
 }
 
 function setupAudioGraph() {
@@ -3240,7 +3266,7 @@ function updateStaticSources() {
   let totalRightVolume = 0;
 
   for (const s of staticSources) {
-    if (s.disposed) continue;
+    if (s.disposed || !s.srcNode) continue;
     if (!volumeAudio) {
       pointSourceRender(s, camera);
     } else {
@@ -3648,6 +3674,7 @@ loadSceneButton.addEventListener('click', async function () {
   scenePathInput.value = sceneBase;
   isSceneLoading = true;
   const requestId = ++sceneLoadRequestId;
+  const sceneName = [...scenePreset.options].find(option => option.value === sceneBase)?.textContent || sceneBase;
   const selectedScene = sceneBase + '/3d/gaussian.compressed.ply';
   const controlPanel = document.getElementById('controlPanel');
 
@@ -3661,7 +3688,7 @@ loadSceneButton.addEventListener('click', async function () {
     staticSources.length = 0;
     updateStaticSources();
     Object.keys(move).forEach(key => { move[key] = 0; });
-    setSceneLoadStatus(`Loading ${sceneBase}…`, 'loading');
+    setSceneLoadStatus(`Loading ${sceneName}…`, 'loading');
     setMainLoading(true);
     setMinimapLoading(true);
     resetEldInspector('Loading scene sources…');
@@ -3715,7 +3742,9 @@ loadSceneButton.addEventListener('click', async function () {
 
     const sourceCount = staticSources.length;
     setSceneLoadStatus(
-      `Loaded ${sceneBase} · ${sourceCount} source${sourceCount === 1 ? '' : 's'}.`,
+      hasSceneAudio()
+        ? `Loaded ${sceneName} · ${sourceCount} source${sourceCount === 1 ? '' : 's'}.`
+        : `Loaded ${sceneName} · ${sourceCount} ELD distributions · No audio rendering.`,
       'ready'
     );
     if (getGrainCapableSources().length) {
@@ -3758,7 +3787,7 @@ loadSceneButton.addEventListener('click', async function () {
 const playBtn = document.getElementById('togglePlay');
 
 function updatePlayButton() {
-  if (!audioCtx || !staticSources.some(source => !source.disposed)) {
+  if (!audioCtx || !hasSceneAudio()) {
     playBtn.disabled = true;
     playBtn.textContent = 'Play';
     return;
@@ -3768,7 +3797,7 @@ function updatePlayButton() {
 }
 
 async function toggleAudioPlay() {
-  if (!audioCtx) return;
+  if (!audioCtx || !hasSceneAudio()) return;
   if (audioCtx.state === 'running') {
     await audioCtx.suspend();
   } else {

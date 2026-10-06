@@ -897,3 +897,8 @@
       grid-template-columns: 1fr;
     }
   }
+
+  [data-audio-controls][hidden],
+  [data-source-overlay-controls][hidden] {
+    display: none;
+  }

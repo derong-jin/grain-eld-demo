@@ -36,8 +36,8 @@
       <div class="panel-body" id="body-scene">
         <label for="scenePreset">Scene Preset</label>
         <select id="scenePreset">
-          <option value="marble-scenes/spring1" selected>Spring1 · Sound Grains</option>
-          <option value="marble-scenes/spring">Spring · Sound Grains</option>
+          <option value="marble-scenes/spring1" selected>Grain Rendering</option>
+          <option value="marble-scenes/spring">ELD Visualization</option>
           <option value="">Custom path</option>
         </select>
         <label for="scenePathInput">Scene Path</label>
@@ -64,16 +64,16 @@
       </div>
       <div class="panel-body" id="body-viz">
         <div class="button-group">
-          <button id="toggleStaticSourceVisibility">Toggle Centroid Visibility</button>
-          <button id="toggleClusterVisibility">Toggle Cluster Visibility</button>
+          <button id="toggleStaticSourceVisibility" data-source-overlay-controls>Toggle Centroid Visibility</button>
+          <button id="toggleClusterVisibility" data-source-overlay-controls>Toggle Cluster Visibility</button>
           <button id="goToOrigin">Reset Camera to Origin</button>
-          <button id="toggleEldWindow" aria-controls="eldWindow" aria-expanded="false" disabled>Open ELD Inspector</button>
+          <button id="toggleEldWindow" aria-controls="eldWindow" aria-expanded="true" disabled>Close ELD Inspector</button>
         </div>
       </div>
     </div>
 
     <!-- Audio Controls Section -->
-    <div class="panel-section">
+    <div class="panel-section" data-audio-controls>
       <div class="panel-title" data-target="body-audio">
         Audio
         <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -132,7 +132,7 @@
     </div>
 
     <!-- Stereo Volume Section -->
-    <div class="panel-section">
+    <div class="panel-section" data-audio-controls>
       <div class="panel-title" data-target="body-stereo">
         Stereo Output
         <svg class="chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -158,9 +158,9 @@
       <div class="panel-body" id="body-perf">
         <div class="metric-row"><span class="metric-label">Callback Time (Last):</span><span class="metric-value"><span id="cbLast">-</span> ms</span></div>
         <div class="metric-row"><span class="metric-label">Callback Time (Avg):</span><span class="metric-value"><span id="cbAvg">-</span> ms</span></div>
-        <div class="metric-row"><span class="metric-label">Sample Rate:</span><span class="metric-value"><span id="sampleRate">-</span> Hz</span></div>
-        <div class="metric-row"><span class="metric-label">Buffer Size:</span><span class="metric-value"><span id="bufferSamples">-</span> frames</span></div>
-        <div class="metric-row"><span class="metric-label">Buffer Latency:</span><span class="metric-value"><span id="bufferMs">-</span> ms</span></div>
+        <div class="metric-row" data-audio-controls><span class="metric-label">Sample Rate:</span><span class="metric-value"><span id="sampleRate">-</span> Hz</span></div>
+        <div class="metric-row" data-audio-controls><span class="metric-label">Buffer Size:</span><span class="metric-value"><span id="bufferSamples">-</span> frames</span></div>
+        <div class="metric-row" data-audio-controls><span class="metric-label">Buffer Latency:</span><span class="metric-value"><span id="bufferMs">-</span> ms</span></div>
       </div>
     </div>
 
@@ -176,7 +176,7 @@
           <div class="shortcut-row"><span class="shortcut-key">A/D</span><span class="shortcut-desc">Move Left/Right</span></div>
           <div class="shortcut-row"><span class="shortcut-key">I/K</span><span class="shortcut-desc">Move Up/Down</span></div>
           <div class="shortcut-row"><span class="shortcut-key">Mouse</span><span class="shortcut-desc">Look Around</span></div>
-          <div class="shortcut-row"><span class="shortcut-key">Space</span><span class="shortcut-desc">Play/Pause Audio</span></div>
+          <div class="shortcut-row" data-audio-controls><span class="shortcut-key">Space</span><span class="shortcut-desc">Play/Pause Audio</span></div>
         </div>
         <!-- <div class="info-note">Requires an HTTP server — file:// URLs are not supported</div> -->
       </div>
@@ -199,8 +199,8 @@
     </div>
   </div>
 
-  <!-- Optional direct-path ELD inspector -->
-  <section id="eldWindow" class="eld-window panel-box" aria-labelledby="eldWindowTitle" hidden>
+  <!-- Direct-path ELD inspector (open by default) -->
+  <section id="eldWindow" class="eld-window panel-box" aria-labelledby="eldWindowTitle">
     <div class="eld-window-header">
       <div>
         <div id="eldWindowTitle" class="eld-window-title">Event Loudness Density</div>

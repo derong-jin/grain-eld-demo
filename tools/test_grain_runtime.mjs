@@ -18,11 +18,14 @@ const functions = [
   'samplePoissonInterval', 'runGrainSchedulerTick',
 ];
 const declarations = [...source.matchAll(/^(?:async )?function (\w+)\(/gm)];
-const code = functions.map(name => {
-  const index = declarations.findIndex(match => match[1] === name);
-  assert.notEqual(index, -1, `Missing production function: ${name}`);
-  return source.slice(declarations[index].index, declarations[index + 1].index);
-}).join('\n');
+function productionFunctions(names) {
+  return names.map(name => {
+    const index = declarations.findIndex(match => match[1] === name);
+    assert.notEqual(index, -1, `Missing production function: ${name}`);
+    return source.slice(declarations[index].index, source.indexOf('\n}', declarations[index].index) + 2);
+  }).join('\n');
+}
+const code = productionFunctions(functions);
 
 function param() {
   return { value: 0, cancelAndHoldAtTime() {},
@@ -163,4 +166,61 @@ test('sources using the same buffers schedule independently and never schedule o
   assert.equal(scheduled[2].length, 0);
   assert.ok(scheduled.flat().every(time => time >= 0.03 && time <= 0.1));
   assert.notEqual(f.sources[0].nextGrainTime, f.sources[1].nextGrainTime);
+});
+
+class EldVector {
+  constructor(x = 0, y = 0, z = 0) { Object.assign(this, { x, y, z }); }
+  fromArray(values, index) { [this.x, this.y, this.z] = values.slice(index, index + 3); return this; }
+  distanceTo(other) { return Math.hypot(this.x - other.x, this.y - other.y, this.z - other.z); }
+}
+
+for (const previousAudio of [false, true]) {
+  test(`ELD-only scene loads 14 geometries without audio or source overlays${previousAudio ? ' and closes the previous audio context' : ''}`, async () => {
+    const config = JSON.parse(readFileSync(new URL('../marble-scenes/spring/render_cfg/choice.json', import.meta.url)));
+    const requests = [];
+    const windowStates = [];
+    let closed = false;
+    const context = vm.createContext({
+      staticSources: [], sceneLoadRequestId: 1, isSingleSource: false,
+      audioCtx: previousAudio ? { async close() { closed = true; } } : null,
+      window: { AudioContext() { assert.fail('ELD-only scene must not create an AudioContext'); } },
+      THREE: { Vector3: EldVector, Color: class { getStyle() { return '#123456'; } } },
+      document: { getElementById: () => null },
+      resetEldInspector() {}, updateGrainRenderingUi() {}, updateAudioMetrics() {},
+      resetVisualizationState() {}, rebuildEldSourceList() {}, syncScenePresentation() {},
+      sourceColorForIndex: () => 0, setEldWindowOpen: value => windowStates.push(value),
+      setSourceContentBusGains() { assert.fail('ELD data must not enter audio rendering'); },
+      fetch: async url => {
+        requests.push(url);
+        assert.ok(url.endsWith('/render_cfg/choice.json'), 'only ELD config is fetched by the source loader');
+        return { ok: true, json: async () => config };
+      },
+    });
+    vm.runInContext(productionFunctions(['loadStaticSourceList', 'updateStaticSources']), context);
+    await context.loadStaticSourceList('marble-scenes/spring', 1);
+    assert.equal(context.staticSources.length, 14);
+    assert.equal(requests.length, 1);
+    assert.equal(context.audioCtx, null);
+    assert.equal(closed, previousAudio);
+    assert.deepEqual(windowStates, [true]);
+    for (const [index, record] of context.staticSources.entries()) {
+      assert.equal(record.fullPcdUrl, `marble-scenes/spring/render_cfg/${config[index].pcd_points}`);
+      assert.equal(record.weightsUrl, `marble-scenes/spring/render_cfg/${config[index].pcd_weights}`);
+      assert.ok(!record.srcNode && !record.grainPath && !record.points && !record.centroid && !record.label);
+    }
+  });
+}
+
+test('ELD density uses weighted scene coordinates without a Three.js render object', () => {
+  const context = vm.createContext({
+    THREE: { Vector3: EldVector }, ELD_MIN_DISTANCE: 1, ELD_REFERENCE_DISTANCE: 1,
+  });
+  vm.runInContext(productionFunctions(['computeSourceLoudnessProfile']), context);
+  const profile = context.computeSourceLoudnessProfile({
+    eldSamples: { positions: new Float32Array([0, 0, 1, 0, 0, 10]), weights: new Float32Array([0.25, 0.75]) },
+  }, new EldVector());
+  assert.deepEqual(Array.from(profile.loudnesses), [-0, -20]);
+  assert.equal(profile.mean, -15);
+  assert.equal(profile.variance, 75);
+  assert.equal(profile.weightTotal, 1);
 });

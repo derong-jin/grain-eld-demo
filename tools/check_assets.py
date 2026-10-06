@@ -2,7 +2,6 @@
 """Check bundled runtime references and ordinary Git file-size thresholds."""
 
 import json
-import hashlib
 import math
 from pathlib import Path
 import sys
@@ -34,21 +33,19 @@ def check():
         sources = json.loads((base / "render_cfg/choice.json").read_text())
         if name == "spring":
             if len(sources) != 14:
-                raise ValueError("Spring must retain its 14 sources")
-            for source in sources:
-                audio = source["audio_path"]
-                expected = (
-                    "leaves-390849" if audio.startswith("2_tree_") else
-                    "waterfall-348818" if audio.startswith("0_waterfalls_") else
-                    "NHU05104248" if audio.startswith("1_stream_") else None
-                )
-                if source.get("grain_path") != expected:
-                    raise ValueError(f"Unexpected Spring grain mapping for {audio}")
+                raise ValueError("ELD Visualization must retain its 14 weighted geometries")
+            if any("audio_path" in source or "grain_path" in source for source in sources):
+                raise ValueError("ELD Visualization must not reference audio or grains")
         grain_count = 0
         grain_sources = 0
+        audio_sources = 0
         dictionaries = set()
         for source in sources:
-            scene_files.add(asset(base / "audio", source["audio_path"]))
+            if source.get("audio_path"):
+                audio_sources += 1
+                scene_files.add(asset(base / "audio", source["audio_path"]))
+            elif source.get("grain_path"):
+                raise ValueError("Grain rendering requires audio_path for loop comparison")
             for key in ("pcd", "pcd_points", "pcd_points_down", "pcd_weights"):
                 if source.get(key):
                     scene_files.add(asset(base / "render_cfg", source[key]))
@@ -93,18 +90,11 @@ def check():
             scene_files.add(profile_path)
         referenced.update(scene_files)
         size = sum(path.stat().st_size for path in scene_files)
-        if name == "spring" and (grain_sources != 7 or len(dictionaries) != 3):
-            raise ValueError("Spring must have 7 grain sources using 3 libraries")
-        print(f"{name}: {grain_sources} grain + {len(sources) - grain_sources} original sources, "
-              f"{grain_count} unique grains in {len(dictionaries)} libraries, "
+        if name == "spring1" and (len(sources) != 1 or grain_sources != 1 or grain_count != 183):
+            raise ValueError("Grain Rendering must keep its one source and 183 grains")
+        print(f"{name}: {audio_sources} audio sources, {len(sources) - audio_sources} ELD-only geometries, "
+              f"{grain_count} grains in {len(dictionaries)} libraries, "
               f"{len(scene_files)} files, {size / MIB:.2f} MiB")
-    stream = ROOT / "marble-scenes/spring1/sound-grains/NHU05104248"
-    stream_copy = ROOT / "marble-scenes/spring/sound-grains/NHU05104248"
-    for original in stream.rglob("*"):
-        if original.is_file():
-            copied = asset(stream_copy, original.relative_to(stream).as_posix())
-            if hashlib.sha256(original.read_bytes()).digest() != hashlib.sha256(copied.read_bytes()).digest():
-                raise ValueError(f"Spring1 stream copy differs: {copied}")
     bundled = {p.resolve() for p in (ROOT / "marble-scenes").rglob("*") if p.is_file()}
     extra = bundled - referenced
     if extra:

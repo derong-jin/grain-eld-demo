@@ -9,9 +9,7 @@
     ],
     "pcd_points": "00_points.ply",
     "pcd_points_down": "00_points_down.ply",
-    "pcd_weights": "00_points_weights.npy",
-    "audio_path": "0_waterfalls_0_0.wav",
-    "grain_path": "waterfall-348818"
+    "pcd_weights": "00_points_weights.npy"
   },
   {
     "class_label": "stream",
@@ -23,9 +21,7 @@
     ],
     "pcd_points": "01_points.ply",
     "pcd_points_down": "01_points_down.ply",
-    "pcd_weights": "01_points_weights.npy",
-    "audio_path": "1_stream_0_0.wav",
-    "grain_path": "NHU05104248"
+    "pcd_weights": "01_points_weights.npy"
   },
   {
     "class_label": "stream",
@@ -37,9 +33,7 @@
     ],
     "pcd_points": "02_points.ply",
     "pcd_points_down": "02_points_down.ply",
-    "pcd_weights": "02_points_weights.npy",
-    "audio_path": "1_stream_1_0.wav",
-    "grain_path": "NHU05104248"
+    "pcd_weights": "02_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -51,8 +45,7 @@
     ],
     "pcd_points": "12_points.ply",
     "pcd_points_down": "12_points_down.ply",
-    "pcd_weights": "12_points_weights.npy",
-    "audio_path": "3_tree_0_0.wav"
+    "pcd_weights": "12_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -64,9 +57,7 @@
     ],
     "pcd_points": "04_points.ply",
     "pcd_points_down": "04_points_down.ply",
-    "pcd_weights": "04_points_weights.npy",
-    "audio_path": "2_tree_1_0.wav",
-    "grain_path": "leaves-390849"
+    "pcd_weights": "04_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -78,8 +69,7 @@
     ],
     "pcd_points": "14_points.ply",
     "pcd_points_down": "14_points_down.ply",
-    "pcd_weights": "14_points_weights.npy",
-    "audio_path": "3_tree_2_0.wav"
+    "pcd_weights": "14_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -91,8 +81,7 @@
     ],
     "pcd_points": "15_points.ply",
     "pcd_points_down": "15_points_down.ply",
-    "pcd_weights": "15_points_weights.npy",
-    "audio_path": "3_tree_3_0.wav"
+    "pcd_weights": "15_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -104,8 +93,7 @@
     ],
     "pcd_points": "16_points.ply",
     "pcd_points_down": "16_points_down.ply",
-    "pcd_weights": "16_points_weights.npy",
-    "audio_path": "3_tree_4_0.wav"
+    "pcd_weights": "16_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -117,9 +105,7 @@
     ],
     "pcd_points": "08_points.ply",
     "pcd_points_down": "08_points_down.ply",
-    "pcd_weights": "08_points_weights.npy",
-    "audio_path": "2_tree_5_0.wav",
-    "grain_path": "leaves-390849"
+    "pcd_weights": "08_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -131,9 +117,7 @@
     ],
     "pcd_points": "09_points.ply",
     "pcd_points_down": "09_points_down.ply",
-    "pcd_weights": "09_points_weights.npy",
-    "audio_path": "2_tree_6_0.wav",
-    "grain_path": "leaves-390849"
+    "pcd_weights": "09_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -145,9 +129,7 @@
     ],
     "pcd_points": "10_points.ply",
     "pcd_points_down": "10_points_down.ply",
-    "pcd_weights": "10_points_weights.npy",
-    "audio_path": "2_tree_7_0.wav",
-    "grain_path": "leaves-390849"
+    "pcd_weights": "10_points_weights.npy"
   },
   {
     "class_label": "tree",
@@ -159,8 +141,7 @@
     ],
     "pcd_points": "20_points.ply",
     "pcd_points_down": "20_points_down.ply",
-    "pcd_weights": "20_points_weights.npy",
-    "audio_path": "3_tree_8_0.wav"
+    "pcd_weights": "20_points_weights.npy"
   },
   {
     "class_label": "flowers",
@@ -172,8 +153,7 @@
     ],
     "pcd_points": "21_points.ply",
     "pcd_points_down": "21_points_down.ply",
-    "pcd_weights": "21_points_weights.npy",
-    "audio_path": "4_flowers_0_0.wav"
+    "pcd_weights": "21_points_weights.npy"
   },
   {
     "class_label": "flowers",
@@ -185,7 +165,6 @@
     ],
     "pcd_points": "22_points.ply",
     "pcd_points_down": "22_points_down.ply",
-    "pcd_weights": "22_points_weights.npy",
-    "audio_path": "4_flowers_1_0.wav"
+    "pcd_weights": "22_points_weights.npy"
   }
 ]
