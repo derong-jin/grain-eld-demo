@@ -313,6 +313,39 @@
     margin-top: 0;
   }
 
+  #body-audio:not(.collapsed) {
+    max-height: 800px;
+  }
+
+  .source-content-mode {
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .source-content-mode[data-mode='grain'] {
+    color: #a4e6bf;
+  }
+
+  .content-mode-switch:not(:disabled) {
+    background: rgba(78, 137, 224, 0.24);
+    border-color: rgba(132, 179, 248, 0.5);
+    color: #e4efff;
+  }
+
+  .content-mode-switch:not(:disabled):hover {
+    background: rgba(78, 137, 224, 0.4);
+  }
+
+  .source-content-help {
+    margin: 0 2px 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
   .grain-render-status {
     min-height: 28px;
     margin: -1px 2px 8px;

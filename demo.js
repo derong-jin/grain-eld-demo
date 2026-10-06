@@ -57,9 +57,9 @@ const gainMeter    = document.getElementById('gainMeter');
 const gainValue    = document.getElementById('gainValue');
 const c = 343.3;
 
-// Real-time grain rendering. Grain assets are loaded lazily the first time the
-// user switches away from the original loop, then scheduled on AudioContext
-// time with a short look-ahead window.
+// Real-time grain rendering is the default for scenes with grain assets.
+// Grains load after the scene, then are scheduled on AudioContext time with a
+// short look-ahead window. Scenes without grains use the original loops.
 const GRAIN_LOAD_CONCURRENCY = 6;
 const GRAIN_SCHEDULER_INTERVAL_MS = 25;
 const GRAIN_SCHEDULER_LOOKAHEAD_SEC = 0.1;
@@ -76,6 +76,12 @@ const GRAIN_DEFAULT_DENOISE_KIND = 'none';
 const GRAIN_DEFAULT_DENOISE_STRENGTH = 1;
 const GRAIN_DEFAULT_DENOISE_MAX_ATTEN_DB = 18;
 const grainToggleButton = document.getElementById('toggleGrainRendering');
+const sourceContentMode = document.getElementById('sourceContentMode');
+const sourceContentSummary = document.getElementById('sourceContentSummary');
+const sourceContentHelp = document.getElementById('sourceContentHelp');
+const grainRetryButton = document.getElementById('retryGrainRendering');
+// Each scene owns its shared immutable grain libraries, never source schedules or ELD.
+const grainLibraries = new Map();
 const grainRenderingStatus = document.getElementById('grainRenderingStatus');
 const grainWindowKindSelect = document.getElementById('grainWindowKind');
 const grainWindowOptions = document.getElementById('grainWindowOptions');
@@ -97,7 +103,7 @@ let grainModeGeneration = 0;
 const ELD_REFERENCE_DISTANCE = 1.0;
 const ELD_MIN_DISTANCE = 1.0;
 const ELD_DEFAULT_BIN_WIDTH_DB = 3.0;
-const ELD_DEFAULT_KDE_BANDWIDTH_DB = 1.5;
+const ELD_DEFAULT_KDE_BANDWIDTH_DB = 0.1;
 const ELD_DEFAULT_GAUSSIAN_SIGMA_SCALE = 1.0;
 const ELD_DEFAULT_GAUSSIAN_SIGMA_FLOOR_DB = 0.5;
 const ELD_DEFAULT_DUMMY_MEAN_DB = -20;
@@ -147,7 +153,7 @@ const eldLastCameraPosition = new THREE.Vector3(
 );
 let eldDirty = true;
 let eldLastUpdateMs = -Infinity;
-let lastPointCloudEldMethod = 'histogram';
+let lastPointCloudEldMethod = 'kde';
 
 // HRIR-based binaural rendering
 let hrirBuffers = null; // Will store {W, X, Y, Z} buffers
@@ -417,103 +423,75 @@ function setGrainRenderingStatus(message, state = '') {
 
 function updateGrainRenderingUi() {
   if (!grainToggleButton) return;
+  const liveSources = staticSources.filter(source => !source.disposed);
   const sources = getGrainCapableSources();
+  const originalCount = liveSources.length - sources.length;
   const loadingSources = sources.filter(source => source.grainState === 'loading');
   const readySources = sources.filter(source => source.grainState === 'ready');
   const failedSources = sources.filter(source => source.grainState === 'error');
+  const libraries = [...new Set(sources.map(source => source.grainLibrary).filter(Boolean))];
+  const readyLibraries = libraries.filter(library => library.grainState === 'ready');
+  const wantsGrains = grainRequestedContentMode === 'grain';
   syncGrainPreprocessingUi();
 
-  if (grainRenderingStatus) {
-    grainRenderingStatus.setAttribute(
-      'aria-busy',
-      String(Boolean(loadingSources.length))
-    );
-  }
-
-  const isPreprocessing = loadingSources.some(
-    source => source.grainProcessingStage === 'preprocessing'
-  );
-  grainToggleButton.textContent = loadingSources.length
-    ? (isPreprocessing ? 'Processing Grains…' : 'Loading Grains…')
-    : (
-      failedSources.length
-        ? 'Retry Grain Load'
-        : (grainRenderingEnabled ? 'Grain Rendering' : 'Loop Audio')
-    );
-  grainToggleButton.disabled = isUiLocked || !sources.length || Boolean(loadingSources.length);
-  grainToggleButton.setAttribute('aria-pressed', String(grainRenderingEnabled));
+  const currentMode = !liveSources.length ? 'No scene loaded'
+    : grainRenderingEnabled ? 'Grain Rendering'
+    : !wantsGrains ? 'Loop Rendering'
+    : loadingSources.length ? 'Preparing Grain Rendering'
+    : failedSources.length ? 'Grain Rendering unavailable' : 'Preparing Grain Rendering';
+  sourceContentMode.textContent = `Current mode: ${currentMode}`;
+  sourceContentMode.dataset.mode = grainRenderingEnabled ? 'grain' : 'loop';
+  sourceContentSummary.textContent = sources.length
+    ? `${sources.length} grain source${sources.length === 1 ? '' : 's'} · ${originalCount} original audio sources`
+    : liveSources.length ? `${originalCount} original audio sources` : '';
+  sourceContentHelp.textContent = originalCount && sources.length
+    ? 'Grain synthesizes streams, waterfall and wind in trees. Loop repeats their original recordings. Birds and insects stay unchanged.'
+    : 'Grain synthesizes sound from grains. Loop repeats the original recording.';
+  grainRenderingStatus?.setAttribute('aria-busy', String(Boolean(loadingSources.length)));
+  // Returning to original loops is always possible, including during preparation or failure.
+  grainToggleButton.textContent = wantsGrains
+    ? 'Switch to Loop Rendering' : 'Switch to Grain Rendering';
+  grainToggleButton.disabled = isUiLocked || !sources.length;
+  grainRetryButton.hidden = !failedSources.length;
+  grainRetryButton.disabled = isUiLocked || Boolean(loadingSources.length);
 
   if (!sources.length) {
-    setGrainRenderingStatus(
-      staticSources.some(source => !source.disposed)
-        ? 'Grain rendering unavailable for this scene. Loop audio only.'
-        : 'Load a scene to inspect grain assets.'
-    );
+    setGrainRenderingStatus(liveSources.length
+      ? 'Grain rendering unavailable for this scene. Loop audio only.'
+      : 'Load a scene to inspect grain assets.');
     return;
   }
-
+  const waitingText = wantsGrains
+    ? (originalCount ? 'Grain sources muted; original audio continues' : 'Muted')
+    : 'Original loops playing';
   if (loadingSources.length) {
-    const completed = loadingSources.reduce(
-      (total, source) => total + (
-        source.grainProcessingStage === 'preprocessing'
-          ? (source.grainProcessedCount || 0)
-          : (source.grainLoadedCount || 0)
-      ),
-      0
-    );
-    const expected = loadingSources.reduce(
-      (total, source) => total + (source.grainExpectedCount || 0),
-      0
-    );
-    const progress = expected ? ` ${completed}/${expected}` : '';
-    const stageLabel = isPreprocessing
-      ? 'Preprocessing grain assets'
-      : 'Decoding grain assets';
-    setGrainRenderingStatus(`Muted · ${stageLabel}…${progress}`, 'loading');
+    const completed = libraries.reduce((total, library) => total +
+      (library.grainLoadedCount || 0) + (library.grainProcessedCount || 0), 0);
+    const expected = libraries.reduce((total, library) => total +
+      2 * (library.grainExpectedCount || 0), 0);
+    const progress = expected ? ` ${completed}/${expected} steps` : '';
+    setGrainRenderingStatus(`${waitingText} · Preparing ${libraries.length} grain ${libraries.length === 1 ? 'library' : 'libraries'}…${progress}`, 'loading');
     return;
   }
-
   if (failedSources.length) {
-    const detail = failedSources[0].grainError || 'grain assets could not be loaded';
-    setGrainRenderingStatus(`Muted · Grain load failed: ${detail}`, 'error');
+    const details = [...new Set(failedSources.map(source => source.grainError))].join('; ');
+    setGrainRenderingStatus(`${waitingText} · Grain load failed: ${details}`, 'error');
     return;
   }
-
   if (!readySources.length) {
-    const paths = sources.map(source => source.grainPath).join(', ');
-    setGrainRenderingStatus(`Available: ${paths} · loads on first use.`);
+    setGrainRenderingStatus(`Available: ${[...new Set(sources.map(source => source.grainPath))].join(', ')}.`);
     return;
   }
-
-  const grainCount = readySources.reduce(
-    (total, source) => total + source.grainBuffers.length,
-    0
-  );
-  const rateText = readySources.length === 1
-    ? `${formatGrainRate(readySources[0].grainRateHz)} events/s`
-    : `${readySources.length} source rates`;
-  const expectedOverlap = readySources.length === 1 &&
-    Number.isFinite(readySources[0].grainMeanDurationSec)
-    ? readySources[0].grainRateHz * readySources[0].grainMeanDurationSec
-    : null;
-  const overlapText = Number.isFinite(expectedOverlap)
-    ? ` · ~${expectedOverlap.toFixed(1)} overlap`
-    : '';
+  const grainCount = readyLibraries.reduce((total, library) => total + library.grainBuffers.length, 0);
+  const rates = [...new Set(readySources.map(source => source.grainRateHz))];
+  const rateText = rates.length === 1
+    ? `${formatGrainRate(rates[0])} events/s per source` : `${readySources.length} source rates`;
   const audioEldText = grainRenderingEnabled
-    ? ` · ${getEldMethodDisplayName(getEldSettings().method)} ELD`
-    : '';
-  const failureCount = readySources.reduce(
-    (total, source) => total + (source.grainLoadFailures || 0),
-    0
-  );
-  const skipped = failureCount ? ` · ${failureCount} skipped` : '';
-  const appliedSettings = readySources[0].grainProcessingSettings ||
-    getGrainProcessingSettings();
-  const processingText = ` · ${formatGrainProcessingSettings(appliedSettings)}`;
+    ? ` · ${getEldMethodDisplayName(getEldSettings().method)} ELD` : '';
+  const settings = readySources[0].grainProcessingSettings || getGrainProcessingSettings();
   setGrainRenderingStatus(
-    `${grainCount} grains · ${rateText}${overlapText}${audioEldText}` +
-      `${processingText}${skipped}`,
-    grainRenderingEnabled ? 'active' : ''
+    `${grainCount} unique grains · ${readyLibraries.length} ${readyLibraries.length === 1 ? 'library' : 'libraries'} · ${rateText}${audioEldText}` +
+    ` · ${formatGrainProcessingSettings(settings)}`, grainRenderingEnabled ? 'active' : ''
   );
 }
 
@@ -576,10 +554,18 @@ function silenceSourceContentBuses(source) {
   smoothAudioParam(source.grainBus?.gain, 0, now, 0);
 }
 
+function clearGrainLibraries() {
+  for (const library of grainLibraries.values()) {
+    library.disposed = true;
+    library.grainLoadAbortController?.abort();
+    library.grainBuffers = [];
+  }
+  grainLibraries.clear();
+}
+
 function clearSourceGrainCache(source) {
   source.grainLoadRevision = (source.grainLoadRevision || 0) + 1;
-  source.grainLoadAbortController?.abort();
-  source.grainLoadAbortController = null;
+  source.grainLibrary = null;
   source.grainLoadPromise = null;
   source.grainLoadingKey = null;
   source.grainProcessingKey = null;
@@ -604,8 +590,7 @@ function disposeStaticSourceAudio(source) {
   if (!source || source.disposed) return;
   source.disposed = true;
   source.grainLoadRevision = (source.grainLoadRevision || 0) + 1;
-  source.grainLoadAbortController?.abort();
-  source.grainLoadAbortController = null;
+  source.grainLibrary = null;
   source.grainLoadPromise = null;
   source.grainLoadingKey = null;
   stopActiveGrains(source);
@@ -669,6 +654,7 @@ function stopCurrentSceneAudio() {
   grainRenderingEnabled = false;
   grainModeGeneration += 1;
   stopGrainScheduler();
+  clearGrainLibraries();
   staticSources.forEach(source => disposeStaticSourceAudio(source));
   updateGrainRenderingUi();
 }
@@ -692,7 +678,7 @@ function getEldSettings() {
   const selectedMethod = eldMethodSelect?.value;
   let method = ELD_METHODS.includes(selectedMethod)
     ? selectedMethod
-    : 'histogram';
+    : 'kde';
   if (method === 'dummy-gaussian' && !getDummyEldAvailability().available) {
     method = lastPointCloudEldMethod;
   }
@@ -1146,19 +1132,19 @@ function createGrainAbortError() {
   }
 }
 
-function assertGrainSourceCurrent(
-  source,
+function assertGrainLibraryCurrent(
+  library,
   signal,
   revision = null,
   processingKey = null
 ) {
   if (
     signal?.aborted ||
-    source.disposed ||
-    source.sceneRequestId !== sceneLoadRequestId ||
-    !staticSources.includes(source) ||
-    (revision !== null && source.grainLoadRevision !== revision) ||
-    (processingKey !== null && source.grainLoadingKey !== processingKey)
+    library.disposed ||
+    library.sceneRequestId !== sceneLoadRequestId ||
+    grainLibraries.get(library.cacheKey) !== library ||
+    (revision !== null && library.grainLoadRevision !== revision) ||
+    (processingKey !== null && library.grainLoadingKey !== processingKey)
   ) {
     throw createGrainAbortError();
   }
@@ -1173,13 +1159,13 @@ async function fetchGrainJson(url, signal) {
 }
 
 async function decodeGrainEntry(
-  source,
+  library,
   entry,
   signal,
   revision,
   processingKey
 ) {
-  const response = await fetch(source.grainRootUrl + entry.path, {
+  const response = await fetch(library.grainRootUrl + entry.path, {
     cache: 'no-store',
     signal,
   });
@@ -1187,9 +1173,9 @@ async function decodeGrainEntry(
     throw new Error(`${entry.path} returned HTTP ${response.status}`);
   }
   const encodedAudio = await response.arrayBuffer();
-  assertGrainSourceCurrent(source, signal, revision, processingKey);
+  assertGrainLibraryCurrent(library, signal, revision, processingKey);
   const buffer = await audioCtx.decodeAudioData(encodedAudio);
-  assertGrainSourceCurrent(source, signal, revision, processingKey);
+  assertGrainLibraryCurrent(library, signal, revision, processingKey);
   return {
     id: String(entry.id || entry.path),
     path: entry.path,
@@ -1212,7 +1198,7 @@ function computeAudioBufferRmsDbfs(buffer) {
   return 20 * Math.log10(Math.max(rms, 1e-12));
 }
 
-async function fetchGrainNoiseProfile(source, dictionary, signal) {
+async function fetchGrainNoiseProfile(library, dictionary, signal) {
   const profileConfig = dictionary?.noise_profile;
   const profilePath = profileConfig?.path;
   if (!isSafeRelativeAssetPath(profilePath)) {
@@ -1221,7 +1207,7 @@ async function fetchGrainNoiseProfile(source, dictionary, signal) {
       'run build_noise_profile.py first'
     );
   }
-  const profile = await fetchGrainJson(source.grainRootUrl + profilePath, signal);
+  const profile = await fetchGrainJson(library.grainRootUrl + profilePath, signal);
   if (
     profile?.format !== 'sound-grain-noise-profile' ||
     profile?.version !== 1 ||
@@ -1336,29 +1322,29 @@ function createGrainPreprocessWorkerClient(settings, noiseProfile, signal) {
 }
 
 async function preprocessDecodedGrains(
-  source,
+  library,
   decoded,
   dictionary,
   settings,
   signal,
   revision
 ) {
-  source.grainProcessingStage = 'preprocessing';
-  source.grainProcessedCount = 0;
+  library.grainProcessingStage = 'preprocessing';
+  library.grainProcessedCount = 0;
   updateGrainRenderingUi();
 
   const needsWorker =
     settings.windowKind !== 'none' || settings.denoiseKind !== 'none';
   if (!needsWorker) {
     for (let index = 0; index < decoded.length; index++) {
-      assertGrainSourceCurrent(source, signal, revision, settings.key);
+      assertGrainLibraryCurrent(library, signal, revision, settings.key);
       const grain = decoded[index];
       if (grain) {
         grain.rmsDbfs = computeAudioBufferRmsDbfs(grain.buffer);
         grain.windowApplied = false;
         grain.denoiseApplied = false;
       }
-      source.grainProcessedCount += 1;
+      library.grainProcessedCount += 1;
       if (index % 8 === 7 || index === decoded.length - 1) {
         updateGrainRenderingUi();
         await new Promise(resolve => window.setTimeout(resolve, 0));
@@ -1368,9 +1354,9 @@ async function preprocessDecodedGrains(
   }
 
   const noiseProfile = settings.denoiseKind === 'spectral'
-    ? await fetchGrainNoiseProfile(source, dictionary, signal)
+    ? await fetchGrainNoiseProfile(library, dictionary, signal)
     : null;
-  assertGrainSourceCurrent(source, signal, revision, settings.key);
+  assertGrainLibraryCurrent(library, signal, revision, settings.key);
   const client = createGrainPreprocessWorkerClient(
     settings,
     noiseProfile,
@@ -1379,11 +1365,11 @@ async function preprocessDecodedGrains(
   try {
     await client.ready;
     for (let index = 0; index < decoded.length; index++) {
-      assertGrainSourceCurrent(source, signal, revision, settings.key);
+      assertGrainLibraryCurrent(library, signal, revision, settings.key);
       const grain = decoded[index];
       if (grain) {
         const result = await client.process(grain.buffer);
-        assertGrainSourceCurrent(source, signal, revision, settings.key);
+        assertGrainLibraryCurrent(library, signal, revision, settings.key);
         if (!Array.isArray(result.channels)) {
           throw new Error(`grain ${grain.id} preprocessing returned no channels`);
         }
@@ -1413,7 +1399,7 @@ async function preprocessDecodedGrains(
         grain.windowApplied = settings.windowKind !== 'none';
         grain.denoiseApplied = settings.denoiseKind !== 'none';
       }
-      source.grainProcessedCount += 1;
+      library.grainProcessedCount += 1;
       updateGrainRenderingUi();
     }
     return decoded;
@@ -1422,60 +1408,130 @@ async function preprocessDecodedGrains(
   }
 }
 
-async function ensureSourceGrains(source, processingSettings = getGrainProcessingSettings()) {
-  if (
-    source.grainState === 'ready' &&
-    source.grainProcessingKey === processingSettings.key
-  ) {
+async function ensureSourceGrains(source, settings = getGrainProcessingSettings()) {
+  if (source.grainState === 'ready' && source.grainProcessingKey === settings.key) {
     return source.grainBuffers;
   }
-  if (
-    source.grainLoadPromise &&
-    source.grainLoadingKey === processingSettings.key
-  ) {
+  if (source.grainLoadPromise && source.grainLoadingKey === settings.key) {
     return source.grainLoadPromise;
-  }
-  if (source.grainLoadPromise || source.grainState === 'ready') {
-    clearSourceGrainCache(source);
   }
   if (!isSafeRelativeAssetPath(source.grainPath)) {
     source.grainState = 'error';
     source.grainError = 'grain_path must be a safe relative path';
-    updateGrainRenderingUi();
     throw new Error(source.grainError);
   }
-
+  const rootUrl = new URL(
+    `${source.sceneBase.replace(/\/+$/, '')}/sound-grains/${source.grainPath}/`,
+    document.baseURI
+  ).href;
+  const cacheKey = `${rootUrl}|${audioCtx.sampleRate}|${settings.key}`;
+  let library = grainLibraries.get(cacheKey);
+  if (!library) {
+    library = {
+      cacheKey,
+      grainPath: source.grainPath,
+      displayName: source.grainPath,
+      grainRootUrl: rootUrl,
+      sceneRequestId: source.sceneRequestId,
+      disposed: false,
+      grainState: 'idle',
+      grainBuffers: [],
+      grainLoadRevision: 0,
+    };
+    grainLibraries.set(cacheKey, library);
+  }
+  const revision = ++source.grainLoadRevision;
+  source.grainLibrary = library;
+  source.grainRootUrl = rootUrl;
   source.grainState = 'loading';
+  source.grainLoadingKey = settings.key;
   source.grainError = '';
-  source.grainLoadedCount = 0;
-  source.grainProcessedCount = 0;
-  source.grainExpectedCount = 0;
-  source.grainLoadFailures = 0;
-  source.grainProcessingStage = 'decoding';
-  const revision = (source.grainLoadRevision || 0) + 1;
-  source.grainLoadRevision = revision;
-  source.grainLoadingKey = processingSettings.key;
+  const isCurrent = () => !source.disposed && !library.disposed &&
+    source.sceneRequestId === sceneLoadRequestId &&
+    source.grainLoadRevision === revision && source.grainLibrary === library;
+  const promise = (async () => {
+    try {
+      await Promise.all([
+        ensureGrainLibrary(library, settings),
+        ensureEldPointSamples(source).catch(error => {
+          if (error?.name !== 'AbortError') {
+            console.warn(`Grain ELD unavailable for ${source.displayName}:`, error);
+          }
+        }),
+      ]);
+      if (!isCurrent()) throw createGrainAbortError();
+      // Buffers and RMS statistics are shared; ELD, gain, event nodes and times stay per source.
+      for (const field of [
+        'grainBuffers', 'grainRateHz', 'grainRateWasClamped', 'grainMeanDurationSec',
+        'grainReferenceRmsDbfs', 'grainOverlapGain', 'grainProcessingKey',
+        'grainProcessingSettings', 'grainLoadedCount', 'grainProcessedCount',
+        'grainExpectedCount', 'grainLoadFailures',
+      ]) source[field] = library[field];
+      source.grainState = 'ready';
+      return source.grainBuffers;
+    } catch (error) {
+      if (isCurrent()) {
+        source.grainState = error?.name === 'AbortError' ? 'idle' : 'error';
+        source.grainError = `${source.grainPath}: ${error?.message || String(error)}`;
+      }
+      throw error;
+    } finally {
+      if (isCurrent()) {
+        source.grainLoadPromise = null;
+        source.grainLoadingKey = null;
+        updateGrainRenderingUi();
+        syncEldControlState();
+      }
+    }
+  })();
+  source.grainLoadPromise = promise;
+  return promise;
+}
+
+async function ensureGrainLibrary(library, processingSettings = getGrainProcessingSettings()) {
+  if (
+    library.grainState === 'ready' &&
+    library.grainProcessingKey === processingSettings.key
+  ) {
+    return library.grainBuffers;
+  }
+  if (
+    library.grainLoadPromise &&
+    library.grainLoadingKey === processingSettings.key
+  ) {
+    return library.grainLoadPromise;
+  }
+  if (!isSafeRelativeAssetPath(library.grainPath)) {
+    library.grainState = 'error';
+    library.grainError = 'grain_path must be a safe relative path';
+    updateGrainRenderingUi();
+    throw new Error(library.grainError);
+  }
+
+  library.grainState = 'loading';
+  library.grainError = '';
+  library.grainLoadedCount = 0;
+  library.grainProcessedCount = 0;
+  library.grainExpectedCount = 0;
+  library.grainLoadFailures = 0;
+  library.grainProcessingStage = 'decoding';
+  const revision = (library.grainLoadRevision || 0) + 1;
+  library.grainLoadRevision = revision;
+  library.grainLoadingKey = processingSettings.key;
   const abortController = new AbortController();
-  source.grainLoadAbortController = abortController;
+  library.grainLoadAbortController = abortController;
   const { signal } = abortController;
-  source.grainRootUrl = `${source.sceneBase.replace(/\/+$/, '')}/sound-grains/${source.grainPath}/`;
   updateGrainRenderingUi();
 
   let loadPromise;
   loadPromise = (async () => {
     try {
-      const eldLoadPromise = ensureEldPointSamples(source).catch(error => {
-        if (error?.name !== 'AbortError') {
-          console.warn(`Grain ELD unavailable for ${source.displayName}:`, error);
-        }
-        return null;
-      });
       const [dictionary, rateConfig] = await Promise.all([
-        fetchGrainJson(source.grainRootUrl + 'dictionary.json', signal),
-        fetchGrainJson(source.grainRootUrl + 'rate.json', signal),
+        fetchGrainJson(library.grainRootUrl + 'dictionary.json', signal),
+        fetchGrainJson(library.grainRootUrl + 'rate.json', signal),
       ]);
-      assertGrainSourceCurrent(
-        source,
+      assertGrainLibraryCurrent(
+        library,
         signal,
         revision,
         processingSettings.key
@@ -1507,7 +1563,7 @@ async function ensureSourceGrains(source, processingSettings = getGrainProcessin
       }
       const grainRateHz = Math.min(requestedRate, GRAIN_MAX_RATE_HZ);
       const grainRateWasClamped = requestedRate > GRAIN_MAX_RATE_HZ;
-      source.grainExpectedCount = entries.length;
+      library.grainExpectedCount = entries.length;
       updateGrainRenderingUi();
 
       let nextEntryIndex = 0;
@@ -1515,8 +1571,8 @@ async function ensureSourceGrains(source, processingSettings = getGrainProcessin
       const workerCount = Math.min(GRAIN_LOAD_CONCURRENCY, entries.length);
       const workers = Array.from({ length: workerCount }, async () => {
         while (true) {
-          assertGrainSourceCurrent(
-            source,
+          assertGrainLibraryCurrent(
+            library,
             signal,
             revision,
             processingSettings.key
@@ -1525,18 +1581,18 @@ async function ensureSourceGrains(source, processingSettings = getGrainProcessin
           if (entryIndex >= entries.length) return;
           try {
             decoded[entryIndex] = await decodeGrainEntry(
-              source,
+              library,
               entries[entryIndex],
               signal,
               revision,
               processingSettings.key
             );
-            source.grainLoadedCount += 1;
+            library.grainLoadedCount += 1;
           } catch (error) {
             if (error?.name === 'AbortError') throw error;
-            source.grainLoadFailures += 1;
+            library.grainLoadFailures += 1;
             console.warn(
-              `Skipping grain ${entries[entryIndex].path} for ${source.displayName}:`,
+              `Skipping grain ${entries[entryIndex].path} for ${library.displayName}:`,
               error
             );
           }
@@ -1544,17 +1600,19 @@ async function ensureSourceGrains(source, processingSettings = getGrainProcessin
         }
       });
       await Promise.all(workers);
+      if (library.grainLoadFailures) {
+        throw new Error(`${library.grainLoadFailures} grain WAV files failed to load`);
+      }
       await preprocessDecodedGrains(
-        source,
+        library,
         decoded,
         dictionary,
         processingSettings,
         signal,
         revision
       );
-      await eldLoadPromise;
-      assertGrainSourceCurrent(
-        source,
+      assertGrainLibraryCurrent(
+        library,
         signal,
         revision,
         processingSettings.key
@@ -1576,53 +1634,54 @@ async function ensureSourceGrains(source, processingSettings = getGrainProcessin
         throw new Error('grain preprocessing produced no finite RMS levels');
       }
 
-      source.grainBuffers = processedGrains;
-      source.grainRateHz = grainRateHz;
-      source.grainRateWasClamped = grainRateWasClamped;
-      source.grainMeanDurationSec = meanDuration;
-      source.grainReferenceRmsDbfs = rmsLevels.length
+      library.grainBuffers = Object.freeze(processedGrains.map(Object.freeze));
+      library.grainRateHz = grainRateHz;
+      library.grainRateWasClamped = grainRateWasClamped;
+      library.grainMeanDurationSec = meanDuration;
+      library.grainReferenceRmsDbfs = rmsLevels.length
         ? rmsLevels[Math.floor(rmsLevels.length / 2)]
         : null;
-      source.grainOverlapGain = 1 / Math.sqrt(
+      library.grainOverlapGain = 1 / Math.sqrt(
         Math.max(1, grainRateHz * meanDuration)
       );
-      source.grainProcessingKey = processingSettings.key;
-      source.grainProcessingSettings = processingSettings;
-      source.grainProcessingStage = '';
-      source.grainState = 'ready';
-      source.grainError = '';
-      return source.grainBuffers;
+      library.grainProcessingKey = processingSettings.key;
+      library.grainProcessingSettings = processingSettings;
+      library.grainProcessingStage = '';
+      library.grainState = 'ready';
+      library.grainError = '';
+      console.info(`Grain library ready: ${library.grainPath} (${processedGrains.length} grains, ${processingSettings.key})`);
+      return library.grainBuffers;
     } catch (error) {
       const ownsLoad =
-        source.grainLoadRevision === revision &&
-        source.grainLoadingKey === processingSettings.key;
+        library.grainLoadRevision === revision &&
+        library.grainLoadingKey === processingSettings.key;
       if (ownsLoad) {
-        source.grainProcessingStage = '';
+        library.grainProcessingStage = '';
         if (error?.name === 'AbortError') {
-          if (!source.disposed) source.grainState = 'idle';
+          if (!library.disposed) library.grainState = 'idle';
         } else {
-          source.grainState = 'error';
-          source.grainError = error?.message || String(error);
-          console.error(`Failed to load grains for ${source.displayName}:`, error);
+          library.grainState = 'error';
+          library.grainError = error?.message || String(error);
+          console.error(`Failed to load grains for ${library.displayName}:`, error);
         }
       }
       throw error;
     } finally {
       const ownsLoad =
-        source.grainLoadRevision === revision &&
-        source.grainLoadingKey === processingSettings.key;
-      if (ownsLoad && source.grainLoadAbortController === abortController) {
-        source.grainLoadAbortController = null;
+        library.grainLoadRevision === revision &&
+        library.grainLoadingKey === processingSettings.key;
+      if (ownsLoad && library.grainLoadAbortController === abortController) {
+        library.grainLoadAbortController = null;
       }
-      if (ownsLoad && source.grainLoadPromise === loadPromise) {
-        source.grainLoadPromise = null;
-        source.grainLoadingKey = null;
+      if (ownsLoad && library.grainLoadPromise === loadPromise) {
+        library.grainLoadPromise = null;
+        library.grainLoadingKey = null;
         updateGrainRenderingUi();
         syncEldControlState();
       }
     }
   })();
-  source.grainLoadPromise = loadPromise;
+  library.grainLoadPromise = loadPromise;
   return loadPromise;
 }
 
@@ -1820,10 +1879,14 @@ async function loadGrainsForContentMode(targetMode, { forceReload = false } = {}
   stopGrainScheduler();
   staticSources.forEach(source => {
     source.nextGrainTime = null;
-    silenceSourceContentBuses(source);
+    if (source.grainPath && targetMode === 'grain') silenceSourceContentBuses(source);
+    else setSourceContentBusGains(source, false);
     stopActiveGrains(source);
   });
-  if (forceReload) sources.forEach(clearSourceGrainCache);
+  if (forceReload) {
+    clearGrainLibraries();
+    sources.forEach(clearSourceGrainCache);
+  }
   updateGrainRenderingUi();
 
   const results = await Promise.allSettled(
@@ -2638,27 +2701,21 @@ function handleGrainProcessingControlChange() {
   });
 });
 
-if (grainToggleButton) {
-  grainToggleButton.addEventListener('click', () => {
-    if (isUiLocked) return;
-    if (grainRenderingEnabled) {
-      deactivateGrainRendering();
-      return;
-    }
-    const hasFailedLoad = getGrainCapableSources().some(
-      source => source.grainState === 'error'
-    );
-    const action = hasFailedLoad
-      ? reloadGrainsForProcessing()
-      : activateGrainRendering();
-    action.catch(error => {
-      if (error?.name !== 'AbortError') {
-        console.error('Could not load grain assets:', error);
-      }
-      updateGrainRenderingUi();
-    });
+function requestGrainRendering() {
+  activateGrainRendering().catch(error => {
+    if (error?.name !== 'AbortError') console.error('Could not load grain assets:', error);
+    updateGrainRenderingUi();
   });
 }
+
+grainToggleButton?.addEventListener('click', () => {
+  if (isUiLocked) return;
+  if (grainRequestedContentMode === 'grain') deactivateGrainRendering();
+  else requestGrainRendering();
+});
+grainRetryButton?.addEventListener('click', () => {
+  if (!isUiLocked) requestGrainRendering();
+});
 
 const hrirBtn = document.getElementById('toggleHRIR');
 // hrirBtn.addEventListener('click', function () {
@@ -2971,7 +3028,7 @@ async function loadStaticSourceList(basePath, requestId) {
       grainError: '',
       grainLoadRevision: 0,
       grainLoadPromise: null,
-      grainLoadAbortController: null,
+      grainLibrary: null,
       grainLoadingKey: null,
       grainProcessingKey: null,
       grainProcessingSettings: null,
@@ -2995,7 +3052,10 @@ async function loadStaticSourceList(basePath, requestId) {
   }
   isSingleSource = (staticSources.length === 1);
   updateStaticSources();
-  staticSources.forEach(source => { source.loopBus.gain.value = 1; });
+  // Only grain-capable sources wait for preprocessing. Original birds/insects keep playing.
+  staticSources.forEach(source => {
+    if (!source.grainPath) setSourceContentBusGains(source, false, true);
+  });
   resetVisualizationState();
   rebuildEldSourceList();
   updateGrainRenderingUi();
@@ -3658,6 +3718,15 @@ loadSceneButton.addEventListener('click', async function () {
       `Loaded ${sceneBase} · ${sourceCount} source${sourceCount === 1 ? '' : 's'}.`,
       'ready'
     );
+    if (getGrainCapableSources().length) {
+      // Keep scene selection available while grains load; scene teardown cancels this work.
+      activateGrainRendering().catch(error => {
+        if (error?.name !== 'AbortError') {
+          console.error('Could not load default grain rendering:', error);
+        }
+        updateGrainRenderingUi();
+      });
+    }
   } catch (err) {
     if (requestId === sceneLoadRequestId) {
       stopCurrentSceneAudio();

@@ -37,7 +37,7 @@
         <label for="scenePreset">Scene Preset</label>
         <select id="scenePreset">
           <option value="marble-scenes/spring1" selected>Spring1 · Sound Grains</option>
-          <option value="marble-scenes/spring">Spring</option>
+          <option value="marble-scenes/spring">Spring · Sound Grains</option>
           <option value="">Custom path</option>
         </select>
         <label for="scenePathInput">Scene Path</label>
@@ -82,7 +82,11 @@
         <span class="controls-label">Rendering Method</span>
         <button id="toggleVolumeAudio">Volume Audio</button>
         <span class="controls-label">Source Content</span>
-        <button id="toggleGrainRendering" disabled>Loop Audio</button>
+        <div id="sourceContentMode" class="source-content-mode" role="status" aria-live="polite">Current mode: No scene loaded</div>
+        <p id="sourceContentSummary" class="source-content-help"></p>
+        <button id="toggleGrainRendering" class="content-mode-switch" type="button" aria-describedby="sourceContentHelp" disabled>Switch to Grain Rendering</button>
+        <button id="retryGrainRendering" type="button" hidden>Retry Grain Load</button>
+        <p id="sourceContentHelp" class="source-content-help">Grain synthesizes sound from grains. Loop repeats the original recording.</p>
         <div id="grainRenderingStatus" class="grain-render-status" role="status" aria-live="polite">
           Load a scene to inspect grain assets.
         </div>
@@ -200,7 +204,7 @@
     <div class="eld-window-header">
       <div>
         <div id="eldWindowTitle" class="eld-window-title">Event Loudness Density</div>
-        <div id="eldWindowSubtitle" class="eld-window-subtitle">Direct path · Histogram representation</div>
+        <div id="eldWindowSubtitle" class="eld-window-subtitle">Direct path · KDE representation</div>
       </div>
       <button id="closeEldWindow" class="eld-close" type="button" aria-label="Close ELD inspector">×</button>
     </div>
@@ -209,19 +213,19 @@
         <div class="eld-control-field">
           <label for="eldMethod">Representation</label>
           <select id="eldMethod">
-            <option value="histogram" selected>Histogram (bins)</option>
+            <option value="histogram">Histogram (bins)</option>
             <option value="gaussian">Gaussian ELD</option>
-            <option value="kde">KDE</option>
+            <option value="kde" selected>KDE</option>
             <option id="eldDummyMethodOption" value="dummy-gaussian" disabled>Dummy Gaussian (single source)</option>
           </select>
         </div>
-        <div id="eldHistogramOptions" class="eld-method-option eld-control-field">
+        <div id="eldHistogramOptions" class="eld-method-option eld-control-field" hidden>
           <label for="eldHistogramBinWidth">Bin width (dB)</label>
           <input id="eldHistogramBinWidth" type="number" min="0.1" max="24" step="0.1" value="3">
         </div>
-        <div id="eldKdeOptions" class="eld-method-option eld-control-field" hidden>
+        <div id="eldKdeOptions" class="eld-method-option eld-control-field">
           <label for="eldKdeBandwidth">Bandwidth (dB)</label>
-          <input id="eldKdeBandwidth" type="number" min="0.1" max="24" step="0.1" value="1.5">
+          <input id="eldKdeBandwidth" type="number" min="0.1" max="24" step="0.1" value="0.1">
         </div>
         <div id="eldGaussianOptions" class="eld-method-option eld-method-option-split" hidden>
           <div class="eld-control-field">

@@ -170,12 +170,21 @@ SCENE/sound-grains/NAME/noise-profile.json  # spectral denoise only
 ```
 
 and reads only the relative WAV paths stored in `dictionary.json`. Grain WAVs
-are decoded lazily with bounded concurrency when Grain Rendering is selected
-for the first time, or reloaded when a preprocessing option changes. During
-each load, both content buses are set to zero and all active grain nodes are
-stopped. The original loop keeps its playback position while muted. After a
-successful load, the previously requested content mode returns through the
-same spatial rendering graph; a failed load remains muted.
+are decoded with bounded concurrency when a grain-capable scene loads (Grain
+Rendering is the default), or reloaded when a preprocessing option changes. During
+preparation for Grain Rendering, both buses of grain-capable sources are set
+to zero and their active grain nodes are stopped. Other sources, including
+Spring's birds and insects, continue their original loops. Muted loops keep
+their playback position. Preparation while Loop Rendering is selected leaves
+the loops audible. Users can return to Loop during loading or after a failure;
+late results cannot change that choice. A failed library is named and can be retried.
+
+Libraries are shared within a scene by absolute asset URL, AudioContext sample
+rate and preprocessing settings. WAV decoding, window/denoise processing and
+RMS statistics happen once per library. ELD point samples, gain, panning,
+event times and active audio nodes remain per source. Spring's seven grain
+sources use three libraries, totaling 231 unique grains. Scene teardown aborts
+pending library work and releases buffers.
 
 The browser demo does not load an external `eld.json`. Its grain-event
 loudness distribution comes from the Representation selected in the inspector:
@@ -242,11 +251,15 @@ decode WAV -> spectral denoise (optional) -> grain window (optional)
 Spectral mode reads the `noise_profile.path` declared in `dictionary.json`.
 The parent research project’s `build_noise_profile.py --attach` estimates that profile from inactive regions
 of the original recording as a Hann-windowed, median-corrected periodogram.
+Spring's continuous leaf recording lacks enough inactive audio, so its offline
+builder uses the lowest-energy 5% of frames with the same spectral estimator.
+This includes quiet leaf texture and is not an independently measured noise floor;
+see [audio source processing](AUDIO_SOURCES.md).
 The real-time mask uses linked stereo power, two frequency-smoothing passes,
 5 ms attack, 60 ms release, and overlap-add reconstruction. Processing runs in
 a Web Worker; processed buffers replace the decoded cache only after the full
-source finishes. Per-source revisions and abort controllers prevent an older
-reload from overwriting a newer option selection.
+library finishes. Library abort controllers, source revisions and scene/mode
+generations prevent stale work from overwriting a newer selection.
 
 If `decodeAudioData()` resamples a grain to the AudioContext rate, the worker
 interpolates the stored noise powers by physical frequency, scales them for
@@ -310,10 +323,10 @@ nominal integral. In adaptive mode, Dummy Gaussian uses
 
 | Option | Default |
 | --- | ---: |
-| Representation | Histogram |
+| Representation | KDE |
 | Gaussian sigma scale | 1.0 |
 | Gaussian minimum sigma | 0.5 dB |
-| KDE bandwidth | 1.5 dB |
+| KDE bandwidth | 0.1 dB |
 | Histogram bin width | 3 dB |
 | Dummy Gaussian mean | -20 dB |
 | Dummy Gaussian sigma | 4 dB |
@@ -325,7 +338,7 @@ nominal integral. In adaptive mode, Dummy Gaussian uses
 | Near-field clamp | 1 scene unit |
 | Maximum retained samples | 4096/source |
 | Camera-driven update rate | Up to 10 Hz |
-| Grain asset load concurrency | 6 requests/source |
+| Grain asset load concurrency | 6 requests/shared library |
 | Grain scheduler tick / look-ahead | 25 ms / 100 ms |
 | Maximum accepted Poisson rate | 100 events/s |
 | Loop/grain crossfade | 20 ms |
